@@ -1,0 +1,81 @@
+\input{preamble.tex}
+
+\begin{document}
+\lecture{MATH453 Elementary Number Theory}{1}{Intro to Number Theory}{Bruce Berndt}{Kevin Gao}
+
+\section{Introduction}
+
+Three branches of number theory: Elementary, Analytic, Algebraic, (Probabilistic)
+
+Connections to other subjects: Discrete mathematics, physics, etc.
+
+\subsection{Twin Primes}
+
+Primes often appear in paris: 3 and 5, 5 and 7, 11 and 13.
+
+\begin{definition}[Twin Primes]
+    If $p$ and $p+2$ are primes, then we call them \textit{\textbf{twin primes}}.
+\end{definition}
+
+A famous conjecture is that there exits infinitely many primes.
+
+\begin{conjecture}
+    There exists infinitely many twin primes.
+\end{conjecture}
+
+A follow-up question to this conjecture is: Does the distance between consecutive primes become arbirarily large.
+
+Let $\pi(x)$ denote the number of primes $\leq x$. For example, $\pi(6)=3$ because there are 3 primes, namely 2, 3, 5, less than or equal to 6. To answer this question, we would like to bound the number of primes less than or equal to $x$ as $x$ grows.
+
+\begin{theorem}[Prime Number Theorem]
+    As $x \to \infty$, $\pi(x) \sim \frac{x}{\log x}$.
+\end{theorem}
+
+This was first proved by Hadamard and de la Vall\'ee-Poussin in 1869. A slightly better bound uses the notion of a \textit{\textbf{logarithmic integral}}
+$$
+\mathrm{li}(x) = \int_2^x \frac{dt}{\log t} \sim \frac{x}{\log x}
+$$
+and
+$$
+\pi(x) = \mathrm{li}(x) + \underbrace{\Delta(x)}_{\text{error term}}
+$$
+Next, we bound the error term.
+
+\begin{definition}[Big-O]
+    We say that $f(x) = O(g(x))$ as $x \to \infty$ if there exists some constant $c > 0$ such that $|f(x)| \leq c|g(x)|$ for sufficiently large $x$.
+\end{definition}
+
+The Big-O notation is useful in number theory because it allows us to bound terms that we don't know the exact value of (for example, some error terms). The best known bound on $\pi(x)$ using big-O notation is
+$$
+\pi(x) = \mathrm{li}(x) + O\left( xe^{\frac{\log^{1/5}x}{(\log(\log(x)))^{1/5}}} \right) 
+$$
+
+It is also conjectured that $pi(x) = \mathrm{li}(x) + O(\sqrt{x} \log^2 x)$.
+
+\section{Riemann Hypothesis}
+Recall that the geometric series $\sum_{n=1}^\infty 1/n^x$ converges for $x > 1$. Similarly, $\sum_{n=1}^\infty 1/n^z$ converges for $\mathrm{Re}\; z > 1$.
+
+We can generalize this for the Riemann zeta function.
+
+\begin{theorem}
+    $$
+    \sum_{n=0}z^n = \frac{1}{1-z}
+    $$
+    when $|z| > 1$.
+
+    The series $\sum_{n=0}z^n = \frac{1}{1-z}$ is also called the \textit{\textbf{Riemann zeta function}}, denote $\zeta(z)$. So this can be equivalently stated as: $\zeta(z)$ has an \textbf{analytic continuation} to the entire complex plane.
+\end{theorem}
+\begin{conjecture}[Riemann Hypothesis]
+    All non-trivial zeros of the Riemann zeta function are on $\mathrm{Re}\; z = 1/2$.
+\end{conjecture}
+
+Pictorially, the Riemann hypothesis can be visualized using the diagram below.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.5\linewidth]{figures/riemann-hypothesis.pdf} 
+    \caption{The non-trivial zeros of $\zeta(z)$ on a complex plane.}
+    \label{fig:riemann-hypothesis}
+\end{figure}
+
+\end{document}

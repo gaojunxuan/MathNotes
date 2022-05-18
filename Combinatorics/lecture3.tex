@@ -1,0 +1,102 @@
+\input{scribe2.tex}
+
+\begin{document}
+\lecture{MAT344 Intro to Combinatorics}{3}{Binomial Theorem}{Reila Zheng}{Kevin Gao}
+
+\section{Binomial Theorem}
+
+\begin{theorem}[Binomial Theorem]
+    For any $x \in \R$, for any $n \geq 0$ natural number
+    $$
+    (1+x)^n = \sum_{k=0}^n \binom{n}{k} x^k
+    $$
+\end{theorem}
+
+\begin{proof}
+    $$
+    \text{LHS} = (1+x)^n = \underbrace{(1+x) (1+x) \cdots (1+x)}_{\text{$n$ times}}
+    $$
+    When we expand and collect the like terms, we get a polynomial of the form
+    $$
+    \sum_{k=0}^n c_k x^k = c_0 + c_1x + c_2 x^2 + \cdots + c_n x^n
+    $$
+    For $k$, the only way to get $x^k$ in the expansion of the LHS is if for $k$ of the $n$ terms in the product to contribute to to $x$, and the rest $n-k$ of the terms to contribute to $1$.
+
+    In total, we have $\binom{n}{k}$ ways to get $x^k$ in the expansions. Hence, $c_k = \binom{n}{k}$.
+\end{proof}
+
+The binomial theorem can be equivalently stated as
+\begin{theorem}[Binomial Theorem (two variables)]
+    For any $x,y \in \R$, $n \in \N$ such that $n \geq 0$,
+    $$
+    (x+y)^n = \sum_{k=0}^k \binom{n}{k} x^k y^{n-k}
+    $$
+\end{theorem}
+
+\begin{example}
+    $$
+    (1+x)^2 = (1 + x)(1 + x) = 1 + \underbrace{x + x}_{\substack{\text{two ways of} \\  \text{picking one 1} \\ \text{and one x}}} + x^2
+    $$
+    $$
+    (1+x)^3 = (1+x) (1+x) (1+x) = 1 + \underbrace{x + x + x}_{\binom{3}{1}x} + \binom{3}{2} x^2 + \binom{3}{3}x^3
+    $$
+    Choose 3 to be $x$ and other 0 to be 1.
+\end{example}
+
+\section{Combinatorial Proofs}
+
+Say you want to prove that
+$$
+2^n = \sum_{k=0}^n \binom{n}{k}
+$$
+Combinatorially, the LHS is the number of binary strings of length $n$. The RHS is obtained by summing up the number of binary strings with $k$ 0's in the binary string of length $n$ over all $k = \{0,\ldots,n\}$.
+
+\begin{remark}
+    The hard part is making sure you count all cases and are not double counting.
+\end{remark}
+
+\begin{example}
+    Say we want to prove the identity
+    $$
+    \binom{2n}{n} = \sum_{k=0}^n \binom{n}{k} \binom{n}{n-k}
+    $$
+    The LHS can be described as follows. Suppose we have a group of $n$ boys and $n$ girls. In total, we have $2n$ people. Choose $n$ people to form a team.
+
+    For the RHS, we can split into cases where $k$ girls are chosen. For each $k$, there are $\binom{n}{k}$ ways to choose girls and $\binom{n}{n-k}$ ways to choose $n-k$ boys. This summed over all $k \in \{0,\ldots,n\}$ gives us $\sum_{k=0}^n \binom{n}{k} \binom{n}{n-k}$.
+\end{example}
+
+\begin{remark}
+    Combinatorially, summation often means summing up the counts for each case.
+\end{remark}
+
+\subsection{Ideas of a Combinatorial Proof}
+
+Say you want to show an identity with LHS = RHS using a combinatorial proof. We follow these steps
+\begin{enumerate}
+    \item Come up with a situation to count one side (whichever is easier).
+    \item Come up with another way to count the same situation, as described by the harder side.
+    \item Show that both count the same objects and conclude that LHS = RHS.
+\end{enumerate}
+
+\begin{remark}
+    Some hints for writing combinatorial proofs:
+    \begin{itemize}
+        \item Start with the easier side
+        \item Break down the hard side (especially those with summations) into cases based on $k$ and note that sum ($\Sigma$) = ``OR'', product ($\Pi$) = ``AND''
+        \item Use facts like $\binom{n}{k} = \binom{n}{n-k}$, $\binom{n}{1} = n$, etc.
+        \item There might be information not captured in the algebraic identity
+    \end{itemize}
+\end{remark}
+
+\begin{example}
+    $$
+    \sum_{k=1}^n \binom{n}{k} k = n 2^{n-1}
+    $$
+    for $n \geq 1$.
+
+    For RHS, there are $n$ people and we want to choose 1 to be the captain ($\binom{n}{1}$). Build a team around the captain. For each of the $n-1$ others not chosen, they can be either on the team or not. Thus, $n (2^{n-1})$.
+
+    For LHS, we split into cases based on there being $k$ people on the team. First, choose $k$ of the $n$ people to be on the team. From the $k$ people, we choose 1 to be the captain ($\binom{k}{1}$). Summing this for all $k \in \{1,\ldots,n\}$ gives the number of all possible configuraitons to form a team with at least one captain.
+\end{example}
+
+\end{document}

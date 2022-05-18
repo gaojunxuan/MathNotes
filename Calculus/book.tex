@@ -1,0 +1,112 @@
+\documentclass[11pt]{book}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{svg}
+\usepackage[h]{esvect}
+\usepackage{graphicx}
+\usepackage{gensymb}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{0pt}
+\def\N {{\mathbb N}}
+\def\Z {{\mathbb Z}}
+\def\R {{\mathbb R}}
+\def\comp {{\mathrm{comp}}}
+\def\proj {{\mathrm{proj}}}
+\def\Grad {\mathrm{grad\,}}
+\def\Div {\mathrm{div\,}}
+\def\Curl {\mathrm{curl\,}}
+
+\newcommand{\partialderiv}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\Implies}{\mbox{ IMPLIES }}
+\newcommand{\Or}{\mbox{ OR }}
+\renewcommand{\And}{\mbox{ AND }}
+\newcommand{\Not}{\mbox{NOT}}
+\newcommand{\Iff}{\mbox{ IFF }}
+\newcommand{\True}{\mbox{T}}
+\newcommand{\False}{\mbox{F}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\usepackage{listings}
+
+\usepackage{tikz}
+\usepackage{pgffor}
+\usetikzlibrary{graphs,arrows.meta,trees,arrows}
+
+\usepackage{xcolor}
+
+\definecolor{codegreen}{HTML}{237e02}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{HTML}{8F4673}
+\definecolor{codebrown}{HTML}{ce9178}
+\definecolor{codecyan}{HTML}{098658}
+\lstdefinestyle{pythonstyle}{
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codepurple},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codebrown},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=pythonstyle}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newcounter{example}[section]
+\newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
+   \noindent \textbf{Example~\theexample. #1} \rmfamily}{\par \begin{flushright} \textbf{End of Example~\theexample} \end{flushright}}
+
+\begin{document}
+
+\title{Notes on Multivariable Calculus}
+\author{Kevin Gao}
+\maketitle
+
+\chapter{Vectors}
+
+\input{chapters/chapter1}
+
+\chapter{Geometry of the Euclidean Space}
+
+\input{chapters/chapter2}
+
+\chapter{Vector Functions}
+
+\input{chapters/chapter3}
+
+\chapter{Topology of $\R^n$}
+
+\input{chapters/chapter4}
+
+\chapter{Functions of Multiple Variables}
+
+\input{chapters/chapter5}
+
+\chapter{Derivatives}
+
+\input{chapters/chapter6}
+
+\chapter{Integrals}
+
+\input{chapters/chapter7}
+
+\chapter{Vector Calculus}
+
+\input{chapters/chapter8}
+
+
+\end{document}
