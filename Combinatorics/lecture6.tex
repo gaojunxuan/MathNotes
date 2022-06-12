@@ -1,0 +1,36 @@
+\input{scribe2.tex}
+
+\begin{document}
+\lecture{MAT344 Intro to Combinatorics}{6}{The Pigeonhole Principle}{Reila Zheng}{Kevin Gao}
+
+\section{The Pigeonhole Principle}
+
+\begin{theorem}[The Pigeonhole Principle]
+    Let $X$ be a set of $n$ objects. Suppose $\{X_1,\ldots,X_k\}$ from a partition of $X$ (i.e. a family of disjoint sets whose union is $X$). If $k < n$, then $\exists i \in \{1,\ldots,k\}$ such that $|X_i| \geq 2$.
+\end{theorem}
+
+\begin{proof}
+    Suppose for contradiction that for all $i \in \{1,\ldots,k\}$, $|X_i| = 1$. Since $\{X_1,\ldots,X_k\}$ is a partition, 
+    $$
+    n = |X| = \sum_{i=1}^k |X_i| = k.
+    $$
+    But this is contradiction since $k < n$.
+\end{proof}
+
+Alternatively, we can state the Pigeonhole Principle in terms of a mapping function.
+
+\begin{theorem}[The Pigeonhole Principle]
+    Let $X$ be a set of $n$ objects. Let $s:\; X \to \{1,\ldots,k\}$. If $k < n$, then $s$ cannot be injective. That is, there exist distinct $x,y \in X$ such that $s(x) = s(y)$.
+\end{theorem}
+
+\begin{proof}
+    For $i \in \{1,\ldots,k\}$, let $X_i = \{x \in X \mid s(x) = i\}$. Suppose for contradiction that $s$ is injective. Then, it follows that $X_i$ are disjoint and 
+    $$
+    \bigcup_{i=1}^k X_i = X.
+    $$
+    But again, since $s$ is injective $|X_i| \leq 1$ for all $i \in \{1,\ldots,k\}$ and this is a contradiction since $k < n$.
+\end{proof}
+
+\section{Applications of the Pigeonhole Principle}
+
+\end{document}

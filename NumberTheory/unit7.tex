@@ -1,0 +1,110 @@
+\input{preamble.tex}
+
+\newcommand\lcm{\mathrm{lcm}}
+
+\begin{document}
+\lecture{MATH453 Elementary Number Theory}{7}{Congruence}{Bruce Berndt}{Kevin Gao}
+
+\section{Congruence}
+
+\begin{definition}
+    $a$ is congruent to $b$ modulo $m$ for $m \in \Z^+$ iff
+    $$
+    m \divides (a-b)
+    $$
+    and we write $a \equiv b \mod m$.
+\end{definition}
+
+For example, $3 \equiv 7 \mod 2$ because $3-7 = -4$ and $2 \divides -4$.
+
+\begin{remark}
+    Note that despite that congruence is denoted by $\equiv$, some properties of equality does not hold. Importantly, $ca \equiv cb \mod m$ DOES NOT imply $a \equiv b \mod m$. For a simple counterexample, consider $4 \equiv 6 \mod 2$ but $2 \not\equiv 3 \mod 2$.
+\end{remark}
+
+\subsection{Properties of Congruence Relation}
+
+$$
+\begin{aligned}
+    &a \equiv a \mod m & \text{reflexive} \\
+    &a \equiv b \mod m \iff b \equiv a \mod m & \text{symmetric} \\
+    &a \equiv b \mod m \;\land\; b \equiv c \mod m \implies a \equiv c \mod m & \text{transitive}
+\end{aligned}
+$$
+
+The reflexive and symmetric properties are obvious. We will provide a short proof for the transitive property.
+
+\begin{proof}
+    By definition of congruence, $a \equiv b \mod m$ means $m \divides (a-b)$. And $b \equiv c \mod m$ means $m \divides (b-c)$. It follows by property of divisibility that $m \divides (a-b+b-c)$. Then, $m \divides (a-c)$, which by definition means $a \equiv c \mod m$.
+\end{proof}
+
+Because of these three properties, we say that congruence defines an \textbf{equivalence relation}. Hence, equivalence relation of congruence divides integers into \textbf{equivalence classes}, known as the \textbf{congruence classes} or \textbf{residue classes}.
+
+\subsection{Congruence Classes}
+
+\begin{definition}[Congruence Classes]
+    The congruence class of $a$ modulo $m$, denoted $[a]_m$, is the set of all integers that are congruent to $a$ modulo $m$
+    $$
+    \{ z \in \Z \mid m \divides (a-z) \}
+    $$
+\end{definition}
+
+\begin{example}
+    Let $m = 7$. Then,
+    $$
+    [0]_7 = \{\ldots,-14,-7,0,7,14,\ldots\}
+    $$
+    $$
+    [1]_7 = \{\ldots,-13,-6,1,8,15,\ldots\}
+    $$
+    $$
+    [2]_7 = \{\ldots,-12,-5,2,9,16,\ldots\}
+    $$
+    $$
+    [3]_7 = \{\ldots,-11,-4,3,10,17,\ldots\}
+    $$
+\end{example}
+
+\begin{definition}[Complete Residue System]
+    A complete residue system modulo $m$ is a set $S$ of integers such that every $n \in \Z$ is congruent to one and only one member of $S$.
+\end{definition}
+
+\begin{example}
+    $\{0,1,2,3,4,5,6\}$ is a complete residue system modulo $7$. \\ Although less obvious, $\{14,57,-12,1060,-24,-2,76\}$ is also a complete residue system modulo $7$.
+\end{example}
+
+\begin{proposition}
+    $S = \{0,1,\ldots,m-1\}$ is a complete residue system modulo $m$.
+\end{proposition}
+
+\begin{proof}
+    Let $a \in \Z$. Apply the division algorithm to $a$ with respect to $m$, so we have
+    $$
+    a = mq + r \qquad 0 \leq r \leq m-1
+    $$
+    By definition of divisibility, $m \divides (a-r)$, and by definition of congruence, $a \equiv r \mod m$. This shows that every integer is congruent to a member $r$ of $\{0,1,\ldots,m-1\}$.
+
+    We also need to show that $a$ is congruent to only one member of $\{0,1,\ldots,m-1\}$. We proceed by contradiction. Assume $a \equiv r_1 \mod m$ and $a \equiv r_2 \mod m$ for some $r_1,r_2 \in \{0,1,\ldots,m-1\}$. By transitivity, $r_1 \equiv r_2 \mod m$, which by definition means $m \divides (r_1 - r_2)$. Since both $r_1$ and $r_2$ are between 0 and $m-1$, $0 \leq r_1-r_2 \leq m-1$. Then, $0 \leq r_1 - r_2 \leq m - 1$ and $m \divides (r_1-r_2)$ imply that $r_1-r_2 = 0$ because otherwise $m$ cannot divide any non-zero integers less than itself. This shows that $r_1 = r_2$ and thus uniqueness.
+\end{proof}
+
+\begin{proposition}
+    Let $a,b,c,d \in \Z$. If $a \equiv b \mod m$ and $c \equiv d \mod m$, then
+    \begin{equation} \label{eq:congruence-prop-1}
+        a + c \equiv b + d \mod m
+    \end{equation}
+    \begin{equation} \label{eq:congruence-prop-2}
+        ac \equiv bd \mod m
+    \end{equation}
+\end{proposition}
+
+\begin{proof} of Equation (\ref{eq:congruence-prop-1})
+
+    By definition of congruence, $m \divides (a-b)$ and $m \divides (c-d)$. By property of divisibility, $m \divides (a-b+c-d)$. This is equivalence to $m \divides [(a+c)-(b+d)]$, which by definition means $a+c \equiv b+d \mod m$.
+\end{proof}
+
+\begin{proof}
+    of Equation (\ref{eq:congruence-prop-2})
+
+    By definition, $m \divides (a-b)$ and $m \divides (c-d)$. Trivially, it follows that $m \divides c(a-b)$. Similarly, $m \divides b(c-d)$. By property of divisibility, $m \divides (ca-cb+bc-bd)$ so $m \divides (ac-bd)$. This by definition means $ac \equiv bd \mod m$.
+\end{proof}
+
+\end{document}

@@ -1,0 +1,83 @@
+\input{preamble.tex}
+
+\usepackage{xr}
+\externaldocument{unit4}
+
+\newcommand\lcm{\mathrm{lcm}}
+
+\begin{document}
+\lecture{MATH453 Elementary Number Theory}{9}{Linear Congruence}{Bruce Berndt}{Kevin Gao}
+
+\section{Linear Congruence}
+
+We are all familiar with linear equations like
+$$
+ax + b = 0
+$$
+We are going to talk about a different kind of linear ``equation'' known as linear congruence. They are of the form
+$$
+ax \equiv b \mod m
+$$
+Let's consider some linear congruence. First, we look at $3x \equiv 1 \mod 6$. If we try everything from 0 to 5, it is easy to notice that this does not have a solution.
+
+How about $2x \equiv 4 \mod 6$. We have one solution $\{2,8,14,\ldots,\}$ and another solution $\{5,11,17,\ldots\}$. In total, we have two solutions. Further, these two solution sets are incongruent because elements from one set is not congruent to those from the other set modulo $6$.
+
+$2x \equiv 5 \mod 6$ does not have a solution. But $3x \equiv 1 \mod 5$ have the solution $\{2,7,12,\ldots,\}$.
+
+The two examples that do not have a solution are $3x \equiv 1 \mod 6$ and $2x \equiv 5 \mod 6$. The ones that do have solutions are $2x \equiv 4 \mod 6$ and $3x \equiv 1 \mod 5$. From these examples, we make the observation that one thing in common among the linear congruences that do not have a solution is that the GCD of $a$ and $m$ does not divide $b$. In particular, we have that $\gcd(3,6) \notdivides 1$ and $\gcd(2,6) \notdivides 5$. On the other hand, $\gcd(2,6) \divides 4$ and $\gcd(3,5) \divides 1$.
+
+We can generalize this into the following theorem:
+
+\begin{theorem}
+    Let $ax \equiv b \mod m$ be a linear congruence in one variable and let $d = \gcd(a,m)$. If $d \notdivides b$, then the linear congruence has no solution in $\Z$. If $d \divides b$, then the linear congruence has exactly $d$ incongruent solutions modulo $m$ in $\Z$.
+\end{theorem}
+
+The proof can be broken into two parts: 
+
+(1) Showing that if $d \notdivides b$, then the linear congruence has no solution. This can be proved using the contrapositive of the original statement (namely, if the linear congruence has solution, then $d \divides b$); 
+
+(2) Showing that if $d \divides b$, then the linear congruence has a solution, $x_0$. And given a solution $x_0$, we can construct infinitely many solutions of a given form and that among those infinitely many solutions, we have $d$ incongruent solutions. More specifically, it suffices to show the following:
+
+\begin{addmargin}[1em]{0em}
+    a. Show that a solution $x_0$ exists. \\
+    b. Given a solution $x_0$, show that $ax \equiv b \mod m$ has infinitely many solutions in $\Z$ of a given form. \\
+    c. Given a solution $x_0$, show that every solution has the form in (b). \\
+    d. Show that there are $d$ incongruent solutions.
+\end{addmargin}
+
+\begin{proof}
+    We begin the proof by proving Part (1) by its contrapositive.
+    
+    Assume that $ax \equiv b \mod m$ has a solution. By definition of congruence, $m \divides ax - b$. By definition of divisibility, $m \divides ax - b$ iff there exists some $y \in \Z$ such that $my = ax-b$. This, in turn, is true iff $ax - my = b$ has a solution. Since $d$ is the gcd of $a$ and $m$, $d \divides a$ and $d \divides m$. By Proposition 2.2, it follows that $d \divides ax - my$. Since $b = ax - my$ iff $ax \equiv b \mod m$ has a solution, $d \divides b$ if the original linear congruence has a solution.
+
+    Now we proceed to prove Part (2)a. Assume $d \divides b$. Since $d$ is the gcd of $a$ and $m$, by Proposition \ref{prop:gcd-linear-combination}, there exists $r,s \in \Z$ such that
+    $$
+    d = ar + ms
+    $$
+    Further, $d \divides b$ implies $b = de$ for some $e \in \Z$. So, by substitution
+    $$
+    b = de = (ar + ms)e = a(re) + m(se)
+    $$
+    which clearly suggests a solution with $x = re$ and $y = -se$ that solves $ax - my = b$ (and thus solves $ax \equiv b \mod m$).
+
+    For Part (2)b, let $x_0$ be an arbitrary solution for the linear congruence $ax \equiv b \mod m$. Let $n \in \Z$ and we consider
+    $$
+    x = x_0 + \left( \frac{m}{d} \right) n
+    $$
+    Since $d \divides m$, $\frac{m}{d}$ is an integer, so it follows that $x$ is also an integer. Furthermore, we observe that
+    $$
+    \begin{aligned}
+        a\left( x_0 + \left( \frac{m}{d} \right) n \right) &= ax_0 + a\left( \frac{m}{d} \right) n \\
+        &= ax_0 + \left( \frac{a}{d} \right) mn \\
+        &\equiv ax_0 \mod m \\
+        &\equiv b \mod m
+    \end{aligned}
+    $$
+    Since for every solution $x$, $ax \equiv b \mod m$ but also $b \equiv a(x_0 + (\frac{m}{d})n) \mod m$, for all $n \in \Z$,
+    $$
+    x_0 + \left( \frac{m}{d} \right) n
+    $$
+    is also a solution to $ax \equiv b \mod m$.
+\end{proof}
+
+\end{document}
