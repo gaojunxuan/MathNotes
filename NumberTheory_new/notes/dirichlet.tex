@@ -1,0 +1,84 @@
+\section{Arithmetic Progression and Dirichlet's Theorem}
+
+Arithmetic progression is another name for the arithmetic sequence, a sequence of integers in which the difference between two consecutive numbers is constant. In general, the $n$th term in an arithmetic sequence/progression is given by
+$$
+a_n = a_1 + (n-1) d
+$$
+How many primes are there in an infinite arithmetic progression? The theorem of Dirichlet tells us that indeed there are infinitely many primes in an infinite arithmetic progression.
+
+\begin{theorem}[Dirichlet's Theorem on Primes in Arithmetic Progression]
+    If $\gcd(a,b)=1$ ($a$ and $b$ are \textbf{relatively prime}), then the set
+    $$
+    \{ an + b \mid n \in \Z,\, n \geq 0 \}
+    $$
+    has \textbf{infinitely} many primes.
+\end{theorem}
+
+The proof of Dirichlet's theorem is beyond the scope of this course but will be covered in a course on analytic number theory. We can, however, prove some special cases of Dirichlet's theorem.
+
+\subsection{Special Cases of Dirichlet's Theorem}
+\begin{lemma} \label{lem:dirichlet-special-case-lem}
+    Let $a,b \in \Z^+$. Suppose $a,b \in \{4n+1 \mid n \in \Z,\, n \geq 0\}$. Then, $ab \in \{4n+1 \mid n \in \Z,\, n \geq 0\}$.
+\end{lemma}
+
+\begin{proof}
+    Let $a = 4n_1 + 1$ and $b = 4n_2 + 1$. Then,
+    $$
+    ab = (4n_1 + 1) (4n_2 + 1) = 16n_1n_2 + 4(n_1+n_2) + 1
+    $$
+    which can be factored as $4(4n_1n_2 + n_1 + n_2) + 1$. Take $n = (4n_1n_2 + n_1 + n_2)$ which is clearly a non-negative integer. Then, $n = ab \in \{4n+1 \mid n \in \Z,\, n \geq 0\}$.
+\end{proof}
+
+Using this simple fact, we can show that there are infinitely many primes of the form $4n + 1$.
+
+\begin{proposition}
+    There exist infinitely many primes in $\{ 4n+3 \mid n \in \Z,\, n \geq 0\}$.
+\end{proposition}
+
+\begin{proof}
+    By contradiction.
+
+    Suppose for contradiction that there exist only finitely many primes in $\{ 4n+3 \mid n \in \Z,\, n \geq 0\}$. Say there exist only $r+1$ such primes. Clearly, $p_0 = 3$, and we have $p_0,p_1,\ldots,p_r$ from the set that are primes.
+
+    Take $N = 4p_1p_2\cdots p_r + 3$. By the Fundamental Theorem of Arithmetic, $N$ has some prime divisor. We claim that $N$ has some prime divisor $q_j \in \{4n+3 \mid n\in \Z,\, n \geq 0\}$. Further, we claim that if not, all prime divisors of $N$ is of the form $4n + 1$. This is because we assumed that $q_j$ is a prime divisor and the prime numbers $\geq 3$ not of the form $4n + 3$ can be written as $4n + 1$ for some $n$. And if all prime divisors of $N$ are of the form $4n+1$, then $N$ must also be of the form $4n + 1$ by Lemma \ref{lem:dirichlet-special-case-lem}, which is not true. Then, $q_j$ is either 3 or one of $p_1,\ldots,p_r$.
+
+    If $q_j = 3$, $q_j \divides 3$ and $q_j \divides N$. It follows that $q_j \divides (N-3)$ so $q_j \divides 4 p_1\cdots p_r$. This is a contradiction because $p_1,\ldots,p_r$ are primes not including 3. Hence, $q_j \neq 3$.
+
+    If $q_j \in \{p_1,\ldots,p_r\}$, then $q_j \divides 4p_1\ldots p_r$. And by choice of $q_j$, $q_j \divides N$. It follows that $q_j \divides N - 4p_1\cdots p_r$. This implies $q_j \divides 3$, which is a contradiction as well becuase $3 \not\in \{p_1,\ldots,p_r\}$.
+
+    In both cases, we have a contradiction so the assumption that there are finitely many primes of the form $4n + 3$ must be false.
+\end{proof}
+
+Note that this proof will not work for the general case of Dirichlet's theorem because Lemma \ref{lem:dirichlet-special-case-lem} does not hold in the general case.
+
+Let's look another example of a similar special-case proof.
+
+\begin{lemma}
+    Let $a,b \in \Z^+$. Suppose $a,b \in \{3n+1 \mid n \in \Z,\, n \geq 0\}$. Then, $ab \in \{3n+1 \mid n \in \Z,\, n \geq 0\}$.
+\end{lemma}
+
+\begin{proof}
+    Similar to the proof for Lemma \ref{lem:dirichlet-special-case-lem}.
+\end{proof}
+
+\begin{theorem}
+    There exist infinitely many primes of the form $3n+2$ for $n \geq 0$.
+\end{theorem}
+
+\begin{proof}
+    Suppose for contradiction that there exist only finitely many primes of the form $3n + 2$. Say there are $r+1$ such primes, namely, $2,p_1,\ldots,p_r$.
+
+    Similar to the proof for the previous theorem, we let
+    $$
+    N = 3p_1\cdots p_r + 2
+    $$
+    We claim that there exsits a prime divisor of $N$ of the form $3n+2$. To see why this claim holds, assume that $N$ has no such divisors. Then, there are two possibilities for the prime divisors of $N$. First, we have $3 \divides N$. This is also not possible because $3 \notdivides 2$. This implies that $3n$ is not a prime divisor for $N$. The only remaining possiblity is that all prime divisors of $N$ are of the form $3n + 1$.
+
+    However, by the previous lemma, we know that if all prime divisors of $N$ are of the form $3n + 1$, then $N$ itself must also be of the form $3n + 1$, which is not true. Hence, $N$ must have some prime divisor of the form $3n + 2$. Now, consider the following two cases regarding the prime divisor $q$ of $N$:
+
+    Case 1: $q=2$. we have $2 \divides N$ and clearly $2 \divides 2$. It follows thata $2 \divides N - 2$, but this is a contradiction because $3p_1\cdots p_r$ does not contain 2 as a factor. Therefore, $q=2$ is not possible.
+
+    Case 2: $q \in \{p_1,\ldots,p_r\}$. $q \divides N$ and $q \divides 3p_1\cdots p_r$. It follows that $q \divides 2$. But again, this is not possible becuase $q$ and $2$ are both primes.
+
+    In both cases, we have a contradiction. This implies that $N$ itself is a prime that is not in $\{2,p_1,\ldots,p_r\}$. Hence, our initial assumption that there are finitely many primes of the form $3n + 2$ must be false, so the theorem holds.
+\end{proof}

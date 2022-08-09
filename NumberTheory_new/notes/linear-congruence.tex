@@ -1,13 +1,3 @@
-\input{preamble.tex}
-
-\usepackage{xr}
-\externaldocument{unit4}
-
-\newcommand\lcm{\mathrm{lcm}}
-
-\begin{document}
-\lecture{MATH453 Elementary Number Theory}{9}{Linear Congruence}{Bruce Berndt}{Kevin Gao}
-
 \section{Linear Congruence}
 
 We are all familiar with linear equations like
@@ -28,7 +18,7 @@ The two examples that do not have a solution are $3x \equiv 1 \mod 6$ and $2x \e
 
 We can generalize this into the following theorem:
 
-\begin{theorem}
+\begin{theorem} \label{thm:lin-congruence-soln}
     Let $ax \equiv b \mod m$ be a linear congruence in one variable and let $d = \gcd(a,m)$. If $d \notdivides b$, then the linear congruence has no solution in $\Z$. If $d \divides b$, then the linear congruence has exactly $d$ incongruent solutions modulo $m$ in $\Z$.
 \end{theorem}
 
@@ -116,7 +106,7 @@ The proof can be broken into two parts:
     Therefore, two solutions of the form $x_0 + (\frac{m}{d}) n$ are congruent modulo $m$ if and only if the $n$-values of these two solutions are congruent modulo $d$. Thus, a complete set of incongruent solutions modulo $m$ of $ax \equiv b \mod m$ can be obtained from an initial solution $x_0 + (\frac{m}{d})n$ by letting $n$ range over a complete residue system modulo $d$, that is $\{0,1,2,\ldots,d-1\}$.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary} \label{cor:all-congruence-solutions}
     Let $ax \equiv b \mod m$ be a linear congruence in one variable and let $d = \gcd(a,m)$. If $d \divides b$, then there are $d$ incongruent solutions modulo $m$ given by
     $$
     x_0 + \left( \frac{m}{d} \right) n \qquad n = 0,1\ldots,d-1
@@ -124,4 +114,70 @@ The proof can be broken into two parts:
     where $x_0$ is a particular solution of the congruence.
 \end{corollary}
 
-\end{document}
+\section{Solving Linear Congruence}
+
+It is perfectly acceptable to solve linear congruence by inspection (guess and check). However, for larger $m$, it might be too slow and tedious to solve the linear congruence simply by inspection. We now introduce a general procedure for solving linear congruence.
+
+Recall that a linear congruence $ax \equiv b \mod m$ can always be expressed as $ax - my = b$ for some $y \in \Z$. We begin by considering an example:
+$$
+9x \equiv 21 \mod 30
+$$
+which is equivalent to $21 = 9x - 30y$. Since $\gcd(9,30) \divides 21$ so the linear congruence has solutions. We apply the Euclidean algorithm
+$$
+\begin{aligned}
+    30 &= 3 \cdot 9 + \boxed{3} \\
+    9 &= 3 \cdot 3 + 0
+\end{aligned}
+$$
+So we know that $\gcd(9,30) = 3 = 1 \cdot 30 - 3 \cdot 9$ (recall that another way to look at gcd is as the minimum positive linear combination of the two numbers). Then, multiply both sides of the equation by 7 so that the LHS is equal to 21, and we have
+$$
+21 = (1 \cdot 7) 30 - (3 \cdot 7) \cdot 9
+$$
+Comparing this with the equation equivalent to our congruence equation, $21 = 9x - 30y$, we know that $x = -21$ and $y = -7$ is a solution. To get other olutions, we apply Corollary \ref{cor:all-congruence-solutions}, giving us $x = -21 + 10 = -11$, $x = -21 + 20 = -1$, $x = -21 + 30 = 9$, etc. Note that once we go above -1, all the other solutions may no longer be incongruent to the previous solutions.
+
+\begin{example}[A harder example]
+    Solve
+    $$
+    481x \equiv 627 \mod 703
+    $$
+\end{example}
+Use the Euclidean algorithm to find $d = \gcd(481, 703)$ 
+$$
+\begin{aligned}
+    703 &= 1 \cdot 481 + 222 \\
+    481 &= 2 \cdot 222 + \boxed{37} \\
+    222 &= 6 \cdot 37 + 0
+\end{aligned}
+$$
+Since $d = 37$ does not divide 627, we are done and the linear congruence does not have a solution.
+
+\begin{example}[A harder example (that actually has a solution)]
+    Solve
+    $$
+    481x \equiv 629 \mod 703
+    $$
+\end{example}
+Use the Euclidean algorithm to find $d = \gcd(481, 703)$ 
+$$
+\begin{aligned}
+    703 &= 1 \cdot 481 + 222 \\
+    481 &= 2 \cdot 222 + \boxed{37} \\
+    222 &= 6 \cdot 37 + 0
+\end{aligned}
+$$
+This time, $37 \divides 629$ so there are 37 incongruent solutions modulo $307$. Next, we express $d = 37$ as a linear combination of 481 and 703.
+$$
+\begin{aligned}
+    37 &= 1 \cdot 481 - 2 \cdot 222 \\
+    &= 1 \cdot 481 - 2 \cdot (703 - 1 \cdot 481) \\
+    &= 3 \cdot 481 - 2 \cdot 703
+\end{aligned}
+$$
+Multiply both sides by 17 and
+$$
+629 = (3 \cdot 17) \cdot 481 - (2 \cdot 17) \cdot 703
+$$
+so $x = 51$ is a solution. The remaining incongruent solutions can be obtained with
+$$
+51 + \frac{703}{37}n \qquad n = 0,1,\ldots,36
+$$

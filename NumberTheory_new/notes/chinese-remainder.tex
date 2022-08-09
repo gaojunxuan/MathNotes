@@ -1,0 +1,146 @@
+\section{Multiplicative Inverse}
+
+Before we introduce the Chinese Remainder Theorem, we first define the notion of a multiplicative inverse modulo.
+
+\begin{definition}[Modular Multiplicative Inverse]
+    Any solution of the linear congruence in one variable $ax \equiv 1 \mod m$ is said to be a multiplicative inverse of $a$ modulo $m$.
+\end{definition}
+
+Under what condition is the linear congruence $ax \equiv 1 \mod m$ solvable, and how many solutions would it have? These questions is answered by a corollary from Theorem \ref{thm:lin-congruence-soln}.
+
+\begin{corollary} \label{cor:mult-inverse-existence}
+    The linear congruence in one variable $ax \equiv 1 \mod m$ has a solution if and only if $\gcd(a,m) = 1$. In other words, $a$ and $m$ need to be relatively prime. If $\gcd(a,m) = 1$, then $ax \equiv 1 \mod m$ has exactly one incongruent solution modulo $m$.
+\end{corollary}
+
+\begin{proof}
+    Consider $ax \equiv b \mod m$ and let $m$. Theorem \ref{thm:lin-congruence-soln} asserts that if $\gcd(a,m) \divides b$, then there are exactly $d$ incongruent solutions modulo $m$. Since $b = 1$ in the case of $ax \equiv 1 \mod m$, the only number that divides $1$ is $1$ itself. So, $\gcd(a,m)$ must be 1 if the linear congruence has a solution and if so has exactly one solution.
+\end{proof}
+
+Let's walk through an example of solving for modulus multiplicative inverse.
+
+\begin{example}
+    Find the multiplicative inverse of 101 modulo 103.
+\end{example}
+We solve the linear congruence
+$$
+101x \equiv 1 \mod 103
+$$
+Clearly, 101 and 103 are relatively prime. But we still need to use the Euclidean algorithm to express 1 as a linear combination of 101 and 103.
+$$
+\begin{aligned}
+    103 &= 1 \cdot 101 + 2 \\
+    101 &= 50 \cdot 2 + 1 \\
+    2 &= 2 \cdot 1 + 0
+\end{aligned}
+$$
+So 
+$$
+\begin{aligned}
+    1 &= 1 \cdot 101 - 50 \cdot 2 \\
+    &= 1 \cdot 101 - 50 \cdot (103 - 1 \cdot 101) \\
+    &= 51 \cdot 101 - 50 \cdot 103
+\end{aligned}
+$$
+So the solution to the linear congruence is $x = 51$.
+
+\section{Chinese Remainder Theorem}
+
+The main theorem we would like to prove is the Chinese Remainder Theorem. It is useful for solving system of linear congruences, that is, finding solution satisfying multiple linear congruences at the same time. The earliest example of the theorem is given as a puzzle in Sunzi Suanjing, dated back in 3rd century A.D.
+
+The original Chinese puzzle asks something to the effect of
+
+\begin{center}
+    ``There are certain things whose number is unknown. If we count them by three, we have one left over; by fives, we have two left over; and by sevens, we have three left over. How many things are there?"
+\end{center}
+
+\begin{theorem}[Chinese Remainder Theorem]
+    Let $m_1,m_2,\ldots,m_n$ be pairwise relatively prime positive integers and let $b_1,b_2,\ldots,b_n$ be any integers. Then, the system of linear congruences in one variable given by
+    $$
+    \begin{aligned}
+        x &\equiv b_1 &\mod m_1 \\
+        x &\equiv b_2 &\mod m_2 \\
+        \vdots && \\
+        x & \equiv b_n &\mod m_n
+    \end{aligned}
+    $$
+    has a unique solution modulo $m_1m_2\ldots m_n$.
+\end{theorem}
+
+\begin{proof}
+    We construct a solution to the given system of linear congruences in one variable. Let $M = m_1m_2\ldots m_n$ and for $i = 1,2,\ldots,n$, let $M_i = M / m_i$. Now, $\gcd(M_i,m_i) = 1$ because all remaining factors of $M_i$ are relatively prime to $m_i$. Then, $M_i x_i \equiv 1 \mod m_i$ has a solution for for each $i$ by the previous corollary.
+
+    Let
+    $$
+    x = b_1 M_1 x_1 + b_2 M_2 x_2 + \cdots + b_n M_n x_n
+    $$
+    Note that $x$ is a solution to the given system of linear congruences since for $i = 1,2,\ldots,n$,
+    $$
+    \begin{aligned}
+        x &= b_1 M_1 x_1 + b_2 M_2 x_2 + \cdots + b_i M_i x_i + \cdots b_n M_n x_n \\
+        &\equiv 0 + 0 + \cdots + b_i + \cdots + 0 \mod m_i \\
+        &\equiv b_i \mod m_i
+    \end{aligned}
+    $$
+    To show uniqueness of $x$, let $x'$ be another solution to the given system of linear congruences in one variable. Then, for all $i = 1,\ldots,n$, we have that $x' \equiv b_i \mod m_i$. Then, we have that $x \equiv x' \mod m_i$ for all $i$ (since the congruence relation is transitive), or equivalently, $m_i \divides x - x'$ for all $i$. Then, $M \divides x-x'$. It follows by definition that $x \equiv x' \mod M$ becuase the $m_i$'s are relatively prime. This shows that if $x'$ is a solution to the system, then it must be congruent to $x$ modulo $M = m_1m_2\ldots m_n$.
+\end{proof}
+
+Now let's use the Chinese Remainder Theorem to solve a problem.
+
+\begin{example}
+Solve the Chinese puzzle using the Chinese Remainder Theorem.
+\end{example}
+
+The puzzle can be written symbolically as
+$$
+\begin{aligned}
+    x &\equiv 1 \mod 3 \\
+    x &\equiv 2 \mod 5 \\
+    x &\equiv 3 \mod 7
+\end{aligned}
+$$
+We have $m_1 = 3$, $m_2 = 5$, $m_3 = 7$. So $M = m_1 m_2 m_3 = 105$. Further, $M_1 = \frac{105}{3} = 35$, $M_2 = \frac{105}{5} = 21$, and $M_3 = \frac{105}{7} = 15$.
+
+Now, we solve the linear congruences individually.
+$$
+\begin{aligned}
+    35x_1 &\equiv 1 \mod 3 \qquad \implies \qquad x_1 = -1 \\
+    21x_2 &\equiv 1 \mod 5 \qquad \implies \qquad x_2 = 1 \\
+    15x_3 &\equiv 1 \mod 7 \qquad \implies \qquad x_3 = 1
+\end{aligned}
+$$
+We construct $x$ to be
+$$
+x = 1 \cdot 35 \cdot (-1) + 2 \cdot 21 \cdot 1 + 3 \cdot 15 \cdot 1 = -35 + 42 + 45 = 52
+$$
+which is the solution to the system of linear congruences.
+
+Note that the Chinese Remainder Theorem as it's being stated right now is only applicable to system of linear congruences where the $m_i$'s are relatively prime. Also the leading coefficient of $x$ in the congruences must be 1. We now look at an example that does not fit the format in the original statement of the Chinese Remainder Theorem and see how we could transform this system into one that is solvable using the Chinese Remainder Theorem.
+
+\begin{example}
+    Solve the system of linear congruences.
+    $$
+    \begin{aligned}
+        3x \equiv 2 \mod 4 \\
+        4x \equiv 1 \mod 5 \\
+        6x \equiv 3 \mod 9
+    \end{aligned}
+    $$
+\end{example}
+
+By Proposition \ref{prop:congruence-cancelation} (cancellation of congruences), the system can be rewritten as
+$$
+\begin{aligned}
+    3x &\equiv 2 \mod 4 \qquad \iff \qquad 9x &\equiv 6 \mod 4 &\\
+    4x &\equiv 1 \mod 5 \qquad \iff \qquad 16x &\equiv 4 \mod 5 & \\
+    6x &\equiv 3 \mod 9 \qquad \iff \qquad 2x &\equiv 1 \mod 3 & \qquad \iff \qquad 4x \equiv 2 \mod 3
+\end{aligned}
+$$
+The goal here is to have a leading coefficient that is one more than a multiple of the mod. We observe that $9x \equiv x \mod 4$, $16x \equiv x \mod 5$, and $4x \equiv x \mod 3$. Then, we can simplify the system into
+$$
+\begin{aligned}
+    9x &\equiv 6 \mod 4 \qquad \iff \qquad x &\equiv 6 \mod 4 & \qquad \iff \qquad x \equiv 2 \mod 4 \\
+    16x &\equiv 4 \mod 5 \qquad \iff \qquad x &\equiv 4 \mod 5 & \\
+    4x &\equiv 2 \mod 3 \qquad \iff \qquad x &\equiv 2 \mod 3 &
+\end{aligned}
+$$
+which we can now solve using the Chinese Remainder Theorem.

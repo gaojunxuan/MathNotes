@@ -1,0 +1,66 @@
+\section{Euler's Phi Function}
+
+We have seen Euler's phi function (a.k.a. Euler's totient function) when we discussed reduced residue systems. Now we define it from a slightly different perspective.
+
+\begin{definition}[Reduced Residue System]
+    Let $m$ be a positive integer. A set of $\phi(m)$ integers such that each element of the set is relatively prime to $m$ and no two elements of the set are congruent modulo $m$ is called a \textbf{reduced residue system} modulo $m$.
+\end{definition}
+
+\begin{definition}[Euler's Phi Function]
+    Euler's phi function of $n$ is the number of positive integers up to $n$ that are relatively prime to $n$.
+    $$
+    \phi(n) = |\{j \in \Z \mid 1 \leq j \leq n,\, \gcd(j,n) = 1\}|
+    $$
+\end{definition}
+
+Here are some example values of $\phi(n)$.
+\begin{example}
+    $\phi(4) = 2$, $\phi(5) = 4$, $\phi(6) = 2$, $\phi(7) = 6$, $\phi(8) = 4$, $\phi(9) = 6$.
+\end{example}
+
+\section{Euler's Theorem}
+
+We have an analog and more general version of Fermat's theorem using Euler's phi function.
+
+\begin{theorem}[Euler's Theorem]
+    Let $a,m \in \Z$, $m > 0$, and $\gcd(a,m) = 1$. Then,
+    $$
+    a^{\phi(m)} \equiv 1 \mod m
+    $$
+\end{theorem}
+
+\begin{proof}
+    Let $r_1,r_2,\ldots,r_{\phi(m)}$ be the $\phi(m)$ distinct positive integers in a reduced residue system modulo $m$. Note that $\gcd(r_i, m) = 1$ for $i = 1,\ldots,\phi(m)$. Consider the $\phi(m)$ integers
+    $$
+    r_1a, \,r_2a,\,\ldots,\,r_{\phi(m)}a
+    $$
+    Since $\gcd(a,m) = 1$, this is also a reduced residue system modulo $m$. To see why, suppose not. Then there is some $i$ and $j$ such that $ar_i \equiv ar_j \mod m$. To show that $\{ar_1,\ldots,ar_{\phi(m)}\}$ is a reduced residue system modulo $m$, it suffices to derive a contradiction, showing that $r_i = r_j$. Since $ar_i \equiv ar_j \mod m$, by definition of congruence, we have $m \divides (ar_i - ar_j)$ so $m \divides a(r_i - r_j)$. Since $m \notdivides a$, it must be that $m \divides (r_i - r_j)$, but this is a contradiction because $\{r_1,\ldots,r_{\phi(m)}\}$ is a reduced residue system modulo $m$. Hence, $\{r_1a,\ldots,r_{\phi}a\}$ is indeed a redueced residue system as well.
+
+    The least nonnegative residues modulo $m$ of the integers in $\{r_1a,\ldots,r_{\phi(m)}a\}$ is a reordering of $r_1,\ldots,r_{\phi(m)}$. In other words, the right hand side of the congruences of $r_i$ modulo $m$ is $r_1,\ldots,r_{\phi(m)}$ in some order. Then, we can multiply these congruences together, giving us
+    $$
+    a^{\phi(m)} r_1 \cdots r_{\phi(m)} \equiv r_1 \cdots r_{\phi(m)} \mod m
+    $$
+    Since $\gcd(r_1\cdots r_{\phi(m)},m) = 1$, we can cancel the $r_1\cdots r_{\phi(m)}$ from both sides of the congruence, giving
+    $$
+    a^{\phi(m)} \equiv 1 \mod m.
+    $$ 
+\end{proof}
+
+A corollary that we obtained while proving Euler's theorem is
+\begin{corollary}
+    If $\{r_1,\ldots,r_{\phi}\}$ is a reduced residue system modulo $m$ and $a$ is an integer such that $\gcd(a,m) = 1$, then the set $\{ar_1,\ldots,ar_{\phi}\}$ is also a reduced residue system modulo $m$.
+\end{corollary}
+
+\begin{proof}
+    See Proof of Euler's theorem.
+\end{proof}
+
+Further, we have the following corollary that suggests an alternative way of calculating the inverse of a given number $a$ modulo $m$ where $\gcd(a,m) = 1$.
+
+\begin{corollary}
+    Let $a,m \in \Z$ with $m > 1$ and $\gcd(a,m) = 1$. Then, $a^{\phi(m)-1}$ is the inverse of $a$ modulo $m$. 
+\end{corollary}
+
+\begin{proof}
+    By Euler's theorem, we have $a^{\phi(m)} \equiv 1 \mod m$. Hence, $aa^{\phi(m)-1} \equiv 1 \mod m$. By definition, this implies that $a^{\phi(m)-1}$ is the inverse of $a$ modulo $m$.
+\end{proof}

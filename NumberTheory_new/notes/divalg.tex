@@ -1,0 +1,94 @@
+Recall that we say $a$ \textbf{divides} $b$, denoted by $a \divides b$, if there exists $c \in \Z$ such that $b = ac$.
+
+\section{Propositions About Division}
+
+Before we talk about the division algorithm, we first introduce some useful propositions about division.
+
+\begin{proposition}
+    $a \divides b$ and $b \divides c$ $\implies$ $a \divides c$. 
+\end{proposition}
+
+\begin{proof}
+    The proof is straightforward from the definition of the division relation.
+
+    Since $a \divides b$, $\exists c_1 \in \Z.\, b = c_1a$. Similarly, $\exists c_2 \in \Z.\, c = c_2 b$ since $b \divides c$. We can then rewrite $c$ as $c = c_2 b = c_1c_2a = (c_1c_2)a$. Since $c_1$ and $c_2$ are all integers, $c_1c_2$ is also an integer. Then, by definition, $a \divides c$.
+\end{proof}
+
+\begin{proposition}
+    If $c \divides a$ and $c \divides b$, then $\forall m,n \in \Z.\, c \divides (ma+nb)$.
+\end{proposition}
+
+\begin{proof}
+    Again, this is immediate from the definition and basic arithmetics.
+
+    Since $c \divides a$, $\exists c_1 \in \Z.\, a = c_1c$. Since $c \divides b$, $\exists c_2 \in \Z.\, b = c_2 c$.
+
+    Let $m,n \in \Z$ be arbitrary. Then, $ma + mb = mc_1c+nc_2c = c(mc_1 + nc_2)$. By definition, $c \divides (ma + mb)$.
+\end{proof}
+
+\section{Floor and Ceiling}
+
+\begin{definition}[Floor]
+    The floor of $x$, denoted $\floor{x}$, is the greatest integer less than or equal to $x$.
+\end{definition}
+
+Similarly, we define the ceiling as follows
+
+\begin{definition}[Ceiling]
+    The ceiling of $x$, denoted $\ceil{x}$, is the smallest integer greater than or equal to $x$.
+\end{definition}
+
+\begin{remark}
+    In his lecture notes, Professor Berndt used $[\cdot]$ for floor. I decided to use the more standard notation in my notes to avoid confusion.
+\end{remark}
+
+\begin{lemma} \label{lem:div-algo-lem1}
+    For $x \in \R$, $x-1 < \floor{x} \leq x$.
+\end{lemma}
+
+\begin{proof}
+    By contradiction. Suppose not, then there exists some $x \in \R$ such that $x-1 \geq \floor{x}$. Take such $x$ and add 1 to both sides of the inequality, yielding $x \geq \floor{x} + 1$. But by definition, $\floor{x}$ is the greatest integer less than or equal to $x$. The fact that $\floor{x}+1$, which is strictly greater than $\floor{x}$, is also less than or equal to $x$ contradicts the definition of floor. Therefore, the original lemma holds. 
+\end{proof}
+
+\section{The Division Algorithm}
+
+The \textbf{division algorithm} is also known as the \textbf{quotient remainder theorem}. The statement is as follows.
+
+\begin{theorem}[The Division Algorithm]
+    Let $a,b \in \Z$ such that $b > 0$. Then, there exists unique $q,r \in \Z$ such that $a = bq + r$ and $0 \leq r < b$.    
+\end{theorem}
+
+\begin{proof}
+    We divide the proof into two parts: existence and uniqueness. We first prove \textbf{existence} by construction.
+
+    Take $q = \floor{a/b}$ and $r = a - b \floor{a/b}$. Then, we have
+    $$
+    a = b \left\lfloor \frac{a}{b} \right\rfloor + r
+    $$
+    This proves that $a = bq + r$. Next, we show that $0 \leq r < b$. By Lemma \ref{lem:div-algo-lem1}, 
+    $$
+    \frac{a}{b} - 1 < \left\lfloor \frac{a}{b} \right\rfloor \leq \frac{a}{b}
+    $$
+    Since $b > 0$, we can multiply both sides by $b$, yielding
+    $$
+    a - b < \left\lfloor \frac{a}{b} \right\rfloor b \leq a
+    $$
+    Mutiply by -1 and reversing the signs, and then add $a$ to both sides
+    $$
+    \begin{aligned}
+        b - a &> - \left\lfloor \frac{a}{b} \right\rfloor b &\geq -a \\
+        b &> - \left\lfloor \frac{a}{b} \right\rfloor b + a &\geq 0
+    \end{aligned}
+    $$
+    Since $r = a - b \floor{a/b}$, by substitution, $b > r \geq 0$. This proves the existence of such $q,r$.
+
+    Next, we prove the \textbf{uniqueness} of such $q$ and $r$ by contradiction. Suppose for contradiction that there exists some $q' \neq q$ and $r' \neq r$ such that $a = bq' + r'$ and $0 \leq r' < b$. Then,
+    $$
+    a - a = 0 = b(q - q') + (r - r')
+    $$
+    $|r - r'| < b$ because both $r < b$ and $r' < b$. WLOG, suppose $r' > r$. Then, $r' - r = b(q' - q)$ by rearranging the previous inequality. This implies that $r' - r$ is a multiple of $b$. But since $r' - r$ is strictly less than $b$,
+    $$
+    0 \leq r' - r < b
+    $$
+    $r'-r$ must be 0. This contradicts the assumption that $r \neq r'$. Similarly, $q = q'$ since $r = r'$, which is also a contradiction.
+\end{proof}

@@ -1,0 +1,63 @@
+\section{Fundamental Theorem of Arithmetic}
+
+Now we introduce a few lemmas in preparation for the Fundamental Theorem of Arithmetic.
+
+\begin{lemma} \label{lem:unique-factor-lem}
+    Let $p$ be prime such that $p \divides ab$. Then, $p \divides a$ or $p \divides b$.
+\end{lemma}
+
+\begin{proof}
+    Assume that $p \divides ab$. If $p \divides a$, then we are done, so assume that $p \notdivides a$. Then, $a$ and $p$ are coprime, so $\gcd(p,a) = 1$. There exists some $m,n \in \Z$ such that $ma + np = 1$ by Prop 4.2.
+
+    $b = 1 \cdot b$ so $b = mab + npb$. By assumption, $p \divides ab$. Then, there exists $c \in \Z$ such that $ab = pc$. It follows that
+    $$
+    b = mpc + npb = p(mc+nb)
+    $$
+    which, by definition of divisiblity, $p \divides b$.
+\end{proof}
+
+\begin{corollary} \label{cor:fta-cor}
+    Let $p$ be prime, $a_1,\ldots,a_n \in \Z$ for $n \geq 2$. If $p \divides a_1a_2\ldots a_n$, then $p \divides a_j$ for at least one $j \in \{1,2,\ldots,n\}$.
+\end{corollary}
+
+\begin{proof}
+    By Lemma \ref{lem:unique-factor-lem}, $p \divides a_1\ldots a_{n-1}$ or $p \divides a_n$. Prove by induction on $n \geq 2$.
+\end{proof}
+
+\begin{theorem}[Fundamental Theorem of Arithmetic]
+    Every integer $a > 1$ can be represented \textbf{uniquely} as a product of primes
+    $$
+    a = p_1^{a_1} p_2^{a_2} \cdots p_n^{a_n}
+    $$
+    where $p_i \neq p_j$ if $i \neq j$ for positive integers $a_i$.
+\end{theorem}
+
+Now, we are ready to prove the \textit{\textbf{Fundamental Theorem of Arithmetic}}. It states the factorizability of any positive integers so the theorem is sometimes called the unique factorization theorem.
+
+\begin{proof}
+    By contradiction.
+
+    Assume that there exists some integer without a prime factorization. Take $c$ to be the smallest of such counterexamples. Then, $c$ must be composite (otherwise, $c$ itself would be a unique prime factorization of $c$). Then, $c = ab$ for some $a,b > 1$ and $a,b < c$. Since $c$ is the smallest counterexample, $a$ and $b$, which are smaller than $c$, can be represented as products of primes. Therefore, $c$ indeed has a prime factorization that is the product of the prime factorizations of $a$ and $b$. This is a contradiction, so $c$ \textbf{has a prime factorization}.
+
+    It remains to be shown that the factorization of $c$ is unique. Suppose for contradiction that $c$ has two prime factorizations. That is
+    $$
+    c = p_1^{a_1} p_2^{a_2} \cdots p_m^{a_m} = q_1^{b_1} q_2^{b_2} \cdots q_n^{b_n}
+    $$
+    where $p_1 < p_{i+1}$ and $q_{j} < q_{j+1}$ for all $i \in \{1,\ldots,m-1\}$ and $j \in \{1,\ldots,n-1\}$.
+
+    It suffices to show that $p_j = q_j$, $a_j = b_j$ for all $j$, $m = n$.
+    
+    Fix arbitrary $p_i$. By Corollary \ref{cor:fta-cor}, $p_i \divides q_j$ for some $j$. Since $p_i$ and $q_j$ are prime, it follows that $p_i = q_j$ because otherwise it would be a contradiction. Similarly, fix $q_j$, and by the same argument, $q_j \divides p_i$ for some $i$ so $p_i = q_j$. Thus, $p_j = q_j$ for all $j$. This also implies that $m = n$.
+
+    Finally, we show that the exponents are also equal. Suppose for contradiction that there exists some $j$ such that $a_j \neq b_j$. Without loss of generality, assume $a_j < b_j$. Since
+    $$
+    p_j^{b_j} \divides c = p_1^{a_1} p_2^{a_2} \cdots p_n^{a_n}
+    $$
+    so $p_1^{a_1} p_2^{a_2} \cdots p_n^{a_n} = k p_j^{b_j}$ for some $k \in \Z$. It follows that by dividing both sides by $p_j^{a_j}$,
+    $$
+    p_1^{a_1} p_2^{a_2} \cdots p_{j-1}^{a_{j-1}} p_{j+1}^{a_{j+1}} \cdots p_n^{a_n} = k p_{j}^{b_j - a_j}
+    $$
+    Since $b_j - a_j > 0$, $p_j \divides p_1^{a_1} p_2^{a_2} \cdots p_{j-1}^{a_{j-1}} p_{j+1}^{a_{j+1}} \cdots p_n^{a_n}$. By Corollary \ref{cor:fta-cor}, $p_j \divides p_i$ for some $i \neq j$. But this is not possible because for all $i \in \{1\ldots n\} \setminus \{j\}$, $p_i$ is prime and $p_j$ is \textbf{not a factor} of $p_1^{a_1} p_2^{a_2} \cdots p_{j-1}^{a_{j-1}} p_{j+1}^{a_{j+1}} \cdots p_n^{a_n}$. Hence, $p_i \divides p_j$ and $p_i \neq p_j$, which is a contradiction because a prime cannot divide another prime.
+
+    Therefore, the prime \textbf{factorization is unique}.
+\end{proof}

@@ -1,0 +1,208 @@
+\section{Ordinary Generating Function}
+
+\begin{definition}[Ordinary Generating Function]
+    Given a sequence of real numbers $a_n$ for $n \geq 0$, we call the function
+    $$
+    F(x) = \sum_{n=0}^\infty a_n x^n
+    $$
+    the \textbf{ordinary generating function} associated to $a_n$.
+\end{definition}
+
+The above may not be convergent for any $x$ although often in combinatorics, it will be convergent for many $x$. We mainly use these functions as a bookkeeping system. Generating function is a useful tool to analyze the behavior of sequences.
+
+\subsection{Geometric Series}
+
+\begin{theorem}
+    Consider the sequence $a_n = 1$ for all integers $n \geq 0$. The associated generating function is $F(x) = \frac{1}{1-x}$.
+\end{theorem}
+
+\begin{proof}
+    It suffices to show that $(1-x) F(x) = 1$. Consider the expansion of this expression:
+    $$
+    \begin{aligned}
+        (1-x) F(x) &= (1-x) \sum_{n=0}^\infty x^n \\
+        &= \sum_{n=0}^\infty x^n - x \sum_{n=0}^\infty x^n \\
+        &= \sum_{n=0}^\infty x^n - \sum_{n=0}^\infty x^{n+1} \\
+        &= 1
+    \end{aligned}
+    $$
+\end{proof}
+
+Next, we consider the \textbf{finite geometric series}.
+
+\begin{theorem}
+    Consider the sequence $a_n = 1$ for all integers $0 \leq n \leq k$ and $a_n = 0$ when $k > n$. The associated generating function is $F(x) = \frac{1-x^{k+1}}{1-x}$
+\end{theorem}
+
+\begin{proof}
+    $$
+    \begin{aligned}
+        (1-x)F(x) &= (1-x) \sum_{n=0}^k x^n \\
+        &= \sum_{n=0}^k x^n - \sum_{n=0}^k x^{n+1} \\
+        &= x^0 - x^{k+1}
+    \end{aligned}
+    $$
+\end{proof}
+
+\subsection{Some Other Examples}
+
+\begin{example}
+    Compute the generating function for the following $a_n$:
+    \begin{itemize}
+        \item $a_n = 2$ for all $n \geq 0$: $F(x) = \sum_{n=0}^\infty 2 x^n = \frac{2}{1-x}$.
+        \item $a_n = 2^n$ for all $n \geq 0$: $F(x) = \sum_{n=0}^\infty 2^n x^n = \sum_{n=0}^\infty (2x)^n = \frac{1}{1-2x}$. 
+        \item $a_n = 1$ for $n \geq 5$ and 0 otherwise: There are two methods for this problem.
+        
+        \textbf{Method 1}: Let $c_n = 1$ for all $n \geq 0$. Let $b_n = 1$ for all $n < 5$ and $b_n = 0$ otherwise. Then, $a_n = c_n - b_n$ for all $n \geq 0$. Then, $F(x) = \sum_{n=0}^\infty (c_n - b_n) x^n = \sum_{n=0}^\infty c^n x^n - \sum_{n=0}^4 b_n x^n = \frac{1}{1-x} - \frac{1-x^5}{1-x}$.
+
+        \textbf{Method 2}: $F(x) = \sum_{n=0}^\infty a_n x^n = \sum_{n=5}^\infty x^n = \sum_{n=0}^\infty x^{n+5} = \frac{x^5}{1-x}$.
+        \item $a_n = 1$ for $n \leq 5$ and 0 otherwise: $F(x) = \sum_{n=0}^5 a_n x^n$.
+        \item $a_n = 1$ when $n$ is even, and 0 otherwise: $F(x) = \sum_{n=0}^\infty x^{2n} = \sum_{n=0}^\infty (x^2)^n = \frac{1}{1-x^2}$.
+        \item $a_n = 2^n + 1$ for all $n \geq 0$: $F(x) = \sum_{n=0}^\infty 2^n x^n + \sum_{n=0}^\infty x^n = \frac{1}{1-2x} + \frac{1}{1-x}$ by linearity.
+    \end{itemize}
+\end{example}
+
+We can generalize some of the observations while working on the examples above so that we can manipulate generating functions.
+
+\section{Manipulating Generating Functions}
+
+\subsection{Addition}
+
+\begin{lemma}[Linearity of (Ordinary) Generating Functions]
+    Let $a_n$ and $b_n$ be two sequences. Let $F(x)$ and $G(x)$ be the ordinary generating functions associated with $a_n$ and $b_n$, respectively. Let $c_n = a_n + b_n$. Then, the generating function associated with $c_n$ is $F(x) + G(x)$.
+\end{lemma}
+
+\subsection{Differentiation}
+
+\begin{proof}
+    $$
+    \begin{aligned}
+        F(x) + G(x) &= \sum_{n=0}^\infty a_n x^n + \sum_{n=0}^\infty b_n x^n \\
+        &= \sum_{n=0}^\infty (a_n x^n + b_n x^n) & \text{linearity of summation} \\
+        &= \sum_{n=0}^\infty (a_n + b_n) x^n \\
+        &= \sum_{n=0}^\infty c_n x^n & \text{definition of $c_n$}
+    \end{aligned}
+    $$
+\end{proof}
+
+\begin{theorem}[Derivative of (Ordinary) Generating Function]
+    Let $a_n$ be a sequence and $b_{n-1} = na_n$ for $n \geq 1$. If $F(x)$ is the generating function associated with $a_n$, then $F'(x)$ (the first derivative of $F(x)$) is the generating function associated with $b_n$.
+\end{theorem}
+
+\begin{proof}
+    $$
+    \begin{aligned}
+        F'(x) &= \sum_{n=0}^\infty a_n n x^{n-1} \\
+        &= \sum_{n=1}^\infty a_n n x^{n-1} \\
+        &= \sum_{n=1}^\infty b_{n-1} x^{n-1}
+    \end{aligned}
+    $$
+\end{proof}
+
+Differentiation is often used to find the coefficient of the $k$th term given a generating function $F(x)$. To get the coefficient of the $k$th term, we find the $k$th derivative of $F(x)$, $G(x) = \frac{d^k}{dx^k} F(x)$. We note that the coefficient for $x^0$ is $k! \cdot a_k$. We can then substitue $0$ for $x$ and we have $G(x) = k! \cdot a_k$.
+
+\subsection{Multiplication}
+
+\begin{theorem}[Multiplication of (Ordinary) Generating Functions]
+    Let $F(x) = \sum_{n=0}^\infty a_n x^n$ and $G(x) = \sum_{n=0}^\infty b_n x^n$. Then,
+    $$
+    H(x) = F(x) G(x) = \sum_{n=0}^\infty c_n x^n
+    $$
+    where $c_n = \sum_{k=0}^n a_{n-k} b_k$.
+\end{theorem}
+
+\begin{proof}
+    Note that
+    $$
+    \begin{aligned}
+        F(x) G(x) &= \sum_{m=0}^\infty a_n G(x) x^m \\
+        &= \sum_{l=0}^\infty a_n \sum_{n=0}^\infty b_l x^{m+l}
+    \end{aligned}
+    $$
+    Now we consider the $n$th coefficient of the infinite sum. The term is $x^n$ so for that $n$, $m + l = n$. It follows that the coefficient associated with the term is $\sum_{m+l = n} a_m b_l$. This can be then expressed as $\sum_{k=0}^n a_{n-k} b_{k}$.
+\end{proof}
+
+\begin{theorem}
+    Let $F_1(x),\ldots,F_m(x)$ be generating functions with $F_i(x) = \sum_{n=0}^\infty a_{n,i} x^n$. Then, 
+    $$
+    F_1(x) \times \cdots \times F_m(x) = \sum_{n=0}^\infty c_n x^n
+    $$
+    where
+    $$
+    c_n = \sum_{e_1+\ldots+e_m = n} a_{e_1,1} + \cdots + a_{e_m,m}.
+    $$
+\end{theorem}
+
+\begin{proof}
+    By induction on $m$.
+\end{proof}
+
+\subsection{Coefficient}
+
+If we have an ordinary generating function in its closed form (instead of its expansion), we can get the coefficient of the $k$th term by taking the $k$th derivative. Recall that the coefficient of the $k$th term is also the $k$th element of the sequence $\{a_n\}$ associated with the generating function.
+
+More specifically, if we have a generating function $F(x) = \sum_{n=0}^\infty a_n x^n$ for some sequence $\{a_n\}$, the $k$th coefficient of $F(x)$ or the $k$th element of $\{a_n\}$ is
+$$
+\frac{\left. \frac{d^k}{dx^k} F(x) \right|_{x=0}}{k!}
+$$
+That is, the $k$th derivative of $F(x)$ evaluated at 0, divided by $k!$.
+
+This is true because by taking the $k$th derivative, what was originally the $x^k$ term becomes the constant term. And plugging in 0 kills off all terms except the constant term. We need to divide the value by $k!$ because we introduced an additional factor of $k!$ while taking the derivative.
+
+From now on, we will use the notation $[x^k](F(x))$ to refer to the coefficient of the $k$th-power term of the generating function $F(x)$.
+
+\subsection{Composition}
+
+Composition of generating functions also have a combinatorial interpretation.
+
+Let $F(x) = \frac{1}{1-x}$ be the generating function that is the geometric series. If $G(x)$ represents the number of ways to build a certain structure on an $n$-element set, then $G(x)^k$ represents the number of ways to split the $n$-element set into an list of $k$ pieces and build a structure on each piece. As long as the const term ($G(0)$) is 0, then $F(G(x))$ represents all ways to break down an $n$-element set into any number of ordered pieces, \textbf{and} build a structure on each piece.
+
+\subsection{Shifting}
+
+Given a generating function $F(x)$ for the sequence $(a_0,a_1,\ldots)$,
+$$
+(\underbrace{0,\ldots,0}_{n}, a_0, a_1, \ldots)
+$$
+has the generating function $x^n F(x)$.
+
+Similarly, $(a_k, a_{k+1},\ldots)$ 
+has the generating function
+$$
+\frac{\sum_{i=0}^{k-1} a_i x^i}{x^n}.
+$$
+
+Alternatively stated,
+$$
+zA(z)=\sum_{n = 1}^\infty a_{n-1}z^n \qquad \text{and} \qquad \frac{A(z)-a_0}{z}=\sum_{n=0}^\infty a_{n+1}z^n
+$$
+
+\section{Using Generating Functions in Counting Problems}
+
+Generating functions are useful for solving counting problems, especially object distribution problems that are otherwise hard to model. Ordinary generating functions are useful for counting ways to distribute indistinguishable objects.
+
+This is mainly because when we multiply two generating functions, the coefficients come together in a way that automatically accounts for different ways of making combinations of a given size.
+
+\begin{theorem}
+    Let $\mathcal{A}$ and $\mathcal{B}$ be classes of objects and let $A(x)$ and $B(x)$ be their generating functions. Then, the class $\mathcal{C} = \mathcal{A} \times \mathcal{B}$ has the generating function $C(x) = A(x) B(x)$.
+\end{theorem}
+
+\begin{proof}
+    Let $c_n$ be the number of objects of size $n$ in the Cartesian product $\mathcal{C} = \mathcal{A} \times \mathcal{B}$. These objects $c = (a,b)$ are obtained by picking an object $a \in \mathcal{A}$ of size $k \leq n$ and an object $b \in \mathcal{B}$ of size $n-k$. Thus,
+    $$
+    c_n = \sum_{k=0}^n a_k b_{n-k}
+    $$
+    Also note
+    $$
+    C(x) = A(x) B(x) = \sum_{n=0}^\infty \sum_{k=0}^n a_k b_{n-k} x^n
+    $$
+    So $C(x) = A(x)B(x)$ is the generating function for $\{c_n\}$.
+\end{proof}
+
+Another way to interpret this theorem is: If $a_k$ counts all sets of size $k$ of type $\mathcal{A}$, and $b_k$ counts all sets of size $k$ of type $\mathcal{B}$, then $[x^k](A(x)B(x))$ counts all pairs of sets $(A,B)$ where the total number of elements in both sets is $k$.
+
+Once we have the generating function, we can either find the power series expansion or use derivative to find the coefficient.
+
+\section{Generating Function and Recurrence}
+
+Generating function is also a great tool for solving recurrence relations.
+

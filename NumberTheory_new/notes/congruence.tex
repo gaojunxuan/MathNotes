@@ -1,0 +1,176 @@
+\section{Congruence}
+
+\begin{definition}
+    $a$ is congruent to $b$ modulo $m$ for $m \in \Z^+$ iff
+    $$
+    m \divides (a-b)
+    $$
+    and we write $a \equiv b \mod m$.
+\end{definition}
+
+For example, $3 \equiv 7 \mod 2$ because $3-7 = -4$ and $2 \divides -4$.
+
+\begin{remark}
+    Note that despite that congruence is denoted by $\equiv$, some properties of equality does not hold. Importantly, $ca \equiv cb \mod m$ DOES NOT imply $a \equiv b \mod m$. For a simple counterexample, consider $4 \equiv 6 \mod 2$ but $2 \not\equiv 3 \mod 2$.
+\end{remark}
+
+This tells us that we cannot just cancel common factors in a congruence relation. We established that in the general case, this will not work. For example, $6 \equiv 3 \mod 3$ but $2 \not\equiv 1 \mod 3$. However, there are cases where we can cancel factors in a congruence.
+
+\begin{proposition} \label{prop:congruence-cancelation}
+    $$
+    ca \equiv cb \mod m \iff a \equiv b \mod \frac{m}{\gcd(c,m)}
+    $$
+\end{proposition}
+
+For example, say we have $6 \equiv 3 \mod 3$. By Proposition \ref{prop:congruence-cancelation}, we have $2 \equiv 1 \mod \frac{3}{\gcd(3,3)}$ so $2 \equiv 1 \mod 1$. Now, we prove this proposition.
+
+\begin{proof}
+
+    ($\implies$):
+    Assume that $ca \equiv cb \mod m$, which by definition, implies that $m \divides (ca-cb)$ and $m \divides c(a-b)$. By definition of divisibility, there exists some $d$ such that $c(a-b) = md$. Then, we can divide both sides by the greatest common divisor of $c$ and $m$, giving us
+    $$
+    \frac{c}{\gcd(c,m)} (a-b) = \frac{m}{\gcd(c,m)} d
+    $$
+    Further, since $\gcd(c,m)$ is the greatest common divisor, $\gcd\left(\frac{c}{\gcd(c,m)},\, \frac{m}{\gcd(c,m)} \right) = 1$. This implies
+    $$
+    \frac{m}{\gcd(c,m)} \divides (a-b)
+    $$
+    which by definition means $a \equiv b \mod \frac{m}{\gcd(c,m)}$.
+
+    ($\impliedby$): Assume that $a \equiv b \mod \frac{m}{\gcd(c,m)}$. By definition, $\frac{m}{\gcd(c,m)} \divides (a-b)$. So there exists some $d$ such that
+    $$
+    a-b = \frac{m}{\gcd(c,m)}d \implies ca - cb = \frac{cm}{\gcd(c,m)} d = \frac{cd}{\gcd(c,m)} m
+    $$
+    This implies $m \divides (ca-cb)$ since $\frac{cd}{\gcd(c,m)}$ is an integer. Then by definition of congruence, $ca \equiv cb \mod m$.
+\end{proof}
+
+\subsection{Properties of Congruence Relation}
+
+$$
+\begin{aligned}
+    &a \equiv a \mod m & \text{reflexive} \\
+    &a \equiv b \mod m \iff b \equiv a \mod m & \text{symmetric} \\
+    &a \equiv b \mod m \;\land\; b \equiv c \mod m \implies a \equiv c \mod m & \text{transitive}
+\end{aligned}
+$$
+
+The reflexive and symmetric properties are obvious. We will provide a short proof for the transitive property.
+
+\begin{proof}
+    By definition of congruence, $a \equiv b \mod m$ means $m \divides (a-b)$. And $b \equiv c \mod m$ means $m \divides (b-c)$. It follows by property of divisibility that $m \divides (a-b+b-c)$. Then, $m \divides (a-c)$, which by definition means $a \equiv c \mod m$.
+\end{proof}
+
+Because of these three properties, we say that congruence defines an \textbf{equivalence relation}. Hence, equivalence relation of congruence divides integers into \textbf{equivalence classes}, known as the \textbf{congruence classes} or \textbf{residue classes}.
+
+\section{Congruence Classes}
+
+\begin{definition}[Congruence Classes]
+    The congruence class of $a$ modulo $m$, denoted $[a]_m$, is the set of all integers that are congruent to $a$ modulo $m$
+    $$
+    \{ z \in \Z \mid m \divides (a-z) \}
+    $$
+\end{definition}
+
+\begin{example}
+    Let $m = 7$. Then,
+    $$
+    [0]_7 = \{\ldots,-14,-7,0,7,14,\ldots\}
+    $$
+    $$
+    [1]_7 = \{\ldots,-13,-6,1,8,15,\ldots\}
+    $$
+    $$
+    [2]_7 = \{\ldots,-12,-5,2,9,16,\ldots\}
+    $$
+    $$
+    [3]_7 = \{\ldots,-11,-4,3,10,17,\ldots\}
+    $$
+\end{example}
+
+\begin{definition}[Complete Residue System]
+    A complete residue system modulo $m$ is a set $S$ of integers such that every $n \in \Z$ is congruent to one and only one member of $S$.
+\end{definition}
+
+\begin{example}
+    $\{0,1,2,3,4,5,6\}$ is a complete residue system modulo $7$. \\ Although less obvious, $\{14,57,-12,1060,-24,-2,76\}$ is also a complete residue system modulo $7$.
+\end{example}
+
+\begin{proposition}
+    $S = \{0,1,\ldots,m-1\}$ is a complete residue system modulo $m$.
+\end{proposition}
+
+\begin{proof}
+    Let $a \in \Z$. Apply the division algorithm to $a$ with respect to $m$, so we have
+    $$
+    a = mq + r \qquad 0 \leq r \leq m-1
+    $$
+    By definition of divisibility, $m \divides (a-r)$, and by definition of congruence, $a \equiv r \mod m$. This shows that every integer is congruent to a member $r$ of $\{0,1,\ldots,m-1\}$.
+
+    We also need to show that $a$ is congruent to only one member of $\{0,1,\ldots,m-1\}$. We proceed by contradiction. Assume $a \equiv r_1 \mod m$ and $a \equiv r_2 \mod m$ for some $r_1,r_2 \in \{0,1,\ldots,m-1\}$. By transitivity, $r_1 \equiv r_2 \mod m$, which by definition means $m \divides (r_1 - r_2)$. Since both $r_1$ and $r_2$ are between 0 and $m-1$, $0 \leq r_1-r_2 \leq m-1$. Then, $0 \leq r_1 - r_2 \leq m - 1$ and $m \divides (r_1-r_2)$ imply that $r_1-r_2 = 0$ because otherwise $m$ cannot divide any non-zero integers less than itself. This shows that $r_1 = r_2$ and thus uniqueness.
+\end{proof}
+
+\begin{proposition}
+    Let $a,b,c,d \in \Z$. If $a \equiv b \mod m$ and $c \equiv d \mod m$, then
+    \begin{equation} \label{eq:congruence-prop-1}
+        a + c \equiv b + d \mod m
+    \end{equation}
+    \begin{equation} \label{eq:congruence-prop-2}
+        ac \equiv bd \mod m
+    \end{equation}
+\end{proposition}
+
+\begin{proof} of Equation (\ref{eq:congruence-prop-1})
+
+    By definition of congruence, $m \divides (a-b)$ and $m \divides (c-d)$. By property of divisibility, $m \divides (a-b+c-d)$. This is equivalence to $m \divides [(a+c)-(b+d)]$, which by definition means $a+c \equiv b+d \mod m$.
+\end{proof}
+
+\begin{proof}
+    of Equation (\ref{eq:congruence-prop-2})
+
+    By definition, $m \divides (a-b)$ and $m \divides (c-d)$. Trivially, it follows that $m \divides c(a-b)$. Similarly, $m \divides b(c-d)$. By property of divisibility, $m \divides (ca-cb+bc-bd)$ so $m \divides (ac-bd)$. This by definition means $ac \equiv bd \mod m$.
+\end{proof}
+
+\section{Reduced Residue System}
+
+Recall that we defined a \textit{\textbf{complete residue system}} as follows.
+
+\begin{definition}[Complete Residue System]
+    A \textbf{complete residue system} modulo $m$ is a set $S$ of integers such that every $n \in \Z$ is congruent to one and only one member of $S$.
+\end{definition}
+
+On the other hand, we define a reduced residue system as
+
+\begin{definition}[Reduced Residue System]
+    A \textbf{reduced residue system} modulo $m$ is a set of integers $r_1, \ldots, r_n$ such that if $\gcd(a,m) = 1$, then $a \equiv r_j \mod m$ for one and only one value of $j$.
+\end{definition}
+
+Stated slightly differently, a reduced residue system modulo $m$ is a set of integers $r_i$ such that $\gcd(r_i,m) = 1$ for all $i$, and $r_i \not\equiv r_j \mod m$ for all $j \neq i$. That is, each element in a reduced residue system is relatively prime to $m$ and no two elements of the set are congruent modulo $m$.
+
+Note that the definition of a reduced residue system immediately implies that $n < m$. To see why, suppose $n = m$ and we have a complete residue system. Then, $m \equiv m \mod m$. WLOG, suppose $m = r_j$ for some $j$ (otherwise, we can choose $r_j$ to be some multiple of $m$). By definition, there's some $a$ such that $a \equiv m \mod m$ but this is impossible since $a$ and $m$ are relatively prime by definition of a reduced residue system. This implies that $m$ or any multiple of $m$ must not be an element in a reduced residue system.
+
+Another way of looking at a reduced residue system is that we can take a complete residue system, remove certain numbers, and get back a reduced residue system. In particular, if we have a complete residue system modulo $m$, and we remove all $r_j$ such that $\gcd(r_j, m) \neq 1$, the resulting system is a reduced residue system. This should be clear from the definition of a reduced system.
+
+Additionally, if $\gcd(a,m) = 1$ and $a \equiv r_j \mod m$ for some $a$, then $\gcd(r_j,m) = 1$. This essentially shows that our alternative definition is the same as the original definition.
+
+\begin{proof}
+    Suppose not. That is, there exists $a$ such that $\gcd(a,m) = 1$ and $m \divides (a-r_j)$ but $\gcd(r_j,m) \neq 1$. This implies there exists some $p$ such that $p \divides r_j$ and $p \divides m$. But we also have $a - r_j = md$ for some $d$ since $m \divides (a-r_j)$. This implies $p \divides a$. But by our assumption, $a$ and $m$ should be relatively prime, so this is a contradiction.
+\end{proof}
+
+\section{Euler's Phi Function}
+
+The number of elements in a reduced residue system modulo $m$ for some fixed $m$ is \textbf{constant}. We call this number \textit{\textbf{Euler's phi function}} or \textit{\textbf{Euler's totient function}}. The Euler's phi function for $m$ is denoted by
+$$
+\varphi(m)
+$$
+
+\begin{theorem}
+    Let $r_1,\ldots,r_n$ be a complete/reduced residue system modulo $m$. Let $\gcd(a,m)=1$. Then,
+    $$
+    \{ ar_1,\ldots, ar_n \}
+    $$
+    is still a complete/reduced residue system modulo $m$.
+\end{theorem}
+
+\begin{proof}
+    Suppose for contradiction that $\{ar_1,\ldots,ar_n\}$ is not a complete/reduced residue system modulo $m$ for some $m$. Then, there must exitsts some $i$ and $j$ such that $ar_i \equiv ar_j \mod m$ (if no such $i,j$ exists, then $\{ar_1,\ldots,ar_n\}$ would indeed be complete/reduced). But since $\gcd(a,m) = 1$, $ar_i \equiv ar_j \mod m \iff r_i \equiv r_j \mod m$. This is a contradiction to the assumption that $\{r_1,\ldots,r_n\}$ is a complete/reduced residue system.
+\end{proof}

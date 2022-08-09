@@ -1,0 +1,290 @@
+\documentclass{book}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
+
+\setlength{\oddsidemargin}{0 in}
+\setlength{\evensidemargin}{0 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%%
+% Book metadata
+\title{Intro to Combinatorics}
+%\subtitle{MAT344 at the University of Toronto}
+\author{Kevin Gao}
+
+
+\usepackage[square,numbers]{natbib}
+
+%%
+% Just some sample text
+\usepackage{lipsum}
+
+%%
+% For nicely typeset tabular material
+\usepackage{booktabs}
+
+%%
+% For graphics / images
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{figures/}}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+
+%%
+% Prints argument within hanging parentheses (i.e., parentheses that take
+% up no horizontal space).  Useful in tabular environments.
+\newcommand{\hangp}[1]{\makebox[0pt][r]{(}#1\makebox[0pt][l]{)}}
+
+%%
+% Prints an asterisk that takes up no horizontal space.
+% Useful in tabular environments.
+\newcommand{\hangstar}{\makebox[0pt][l]{*}}
+
+%%
+% Prints a trailing space in a smart way.
+\usepackage{xspace}
+
+%%
+% For typesetting pseudocode
+\usepackage{clrscode3e}
+
+%%
+% For typesetting math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+%%
+% For multiple columns typesetting
+\usepackage{multicol}
+
+\setcounter{tocdepth}{0}
+%\setcounter{secnumdepth}{0}
+
+%%
+% For enumerate and itemize
+\usepackage{enumitem}
+
+\setlist[itemize]{topsep=0pt,itemsep=2pt,leftmargin=2em}
+\setlist[enumerate]{topsep=0pt,itemsep=2pt,leftmargin=2em}
+
+% Tikz and setup
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{intersections, angles, quotes, calc, positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.13}
+\tikzset{
+    force/.style={thick, {Circle[length=2pt]}-stealth, shorten <=-1pt}
+}
+
+%%
+% Theorem environments
+
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0.5em}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{ForestGreen!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=ForestGreen, backgroundcolor=ForestGreen!5,
+      },
+    spaceabove=8pt
+]{thmgreenbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue, backgroundcolor=NavyBlue!5,
+    },
+    spaceabove=8pt,
+]{thmbluebox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue
+    },
+    spaceabove=8pt
+]{thmblueline}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{RawSienna!70!black}, bodyfont=\normalfont,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=RawSienna, backgroundcolor=RawSienna!5,
+    },
+    spaceabove=8pt
+]{thmredbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{RawSienna!70!black}, bodyfont=\normalfont,
+    numbered=no,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=RawSienna, backgroundcolor=RawSienna!1,
+    },
+    qed=\qedsymbol,
+    spaceabove=8pt
+]{thmproofbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    numbered=no,
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue, backgroundcolor=NavyBlue!1,
+    },
+    spaceabove=8pt
+]{thmexplanationbox}
+
+\declaretheorem[style=thmgreenbox, name=Definition, numberwithin=chapter]{definition}
+\declaretheorem[style=thmbluebox, numbered=no, name=Example]{example}
+\declaretheorem[style=thmredbox, name=Theorem, numberwithin=chapter]{theorem}
+\declaretheorem[style=thmredbox, name=Proposition, sibling=theorem]{proposition}
+\declaretheorem[style=thmredbox, name=Lemma, sibling=theorem]{lemma}
+\declaretheorem[style=thmredbox, name=Corollary, sibling=theorem]{corollary}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+
+% Prints the month name (e.g., January) and the year (e.g., 2008)
+\newcommand{\monthyear}{%
+  \ifcase\month\or January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or
+  December\fi\space\number\year
+}
+
+
+% Prints an epigraph and speaker in sans serif, all-caps type.
+\newcommand{\openepigraph}[2]{%
+  %\sffamily\fontsize{14}{16}\selectfont
+  \begin{fullwidth}
+  \sffamily\large
+  \begin{doublespace}
+  \noindent\allcaps{#1}\\% epigraph
+  \noindent\allcaps{#2}% author
+  \end{doublespace}
+  \end{fullwidth}
+}
+
+% Inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+\usepackage{units}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\anglebrac{\langle}{\rangle}
+
+% Generates the index
+\usepackage{makeidx}
+\makeindex
+
+% Section and chapter header format
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{Chapter \thechapter}{0em}{}
+\titlespacing{\chapter}{0pt}{-32pt}{1cm}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+\tableofcontents
+
+% r.9 introduction
+\cleardoublepage
+
+\mainmatter
+
+\part{Strings and Counting}
+
+\chapter{Strings, Enumeration, and Permutation}
+\input{notes/strings.tex}
+
+\chapter{Binomial Theorem and Combinatorial Proofs}
+\input{notes/binom.tex}
+
+\chapter{The Pigeonhole Principle}
+\input{notes/pigeonhole.tex}
+
+\part{Induction and Recurrence}
+
+\chapter{Induction}
+\input{notes/induction.tex}
+
+\chapter{Generating Functions}
+\input{notes/generating-func.tex}
+
+\part{Graph Theory}
+
+\chapter{Basic Definitions of Graphs}
+\input{notes/graph.tex}
+
+\chapter{Eulerian and Hamiltonian Graphs}
+\input{notes/eulerian-ham.tex}
+
+\chapter{Graph Coloring}
+\input{notes/coloring.tex}
+
+\chapter{Planrity and Euler's Formula}
+\input{notes/planarity.tex}
+
+\chapter{Counting Trees}
+\input{notes/count-trees.tex}
+
+\part{Posets}
+
+\chapter{Basic Definitions of Posets}
+\input{notes/poset.tex}
+
+\chapter{Dilworth's Theorem}
+\input{notes/dilworth.tex}
+
+\part{Inclusion-Exclusion}
+
+\chapter{Inclusion-Exclusion Principle}
+\input{notes/inc-exc.tex}
+
+\chapter{More Applications of Inclusion-Exclusion}
+\input{notes/derangement.tex}
+
+\part{Combinatorial Game Theory}
+
+\backmatter
+
+\bibliographystyle{abbrvnat}
+\bibliography{stringbook}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\printindex
+
+\end{document}
+

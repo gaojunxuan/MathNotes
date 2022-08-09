@@ -1,0 +1,251 @@
+\section{Definition and Some Examples}
+
+\begin{definition}[Arithmetic Function]
+    An \textbf{arithmetic function} is a function whose domain is the set of positive integers.
+\end{definition}
+
+The Euler's phi function $\phi(n)$ that we discussed previously is an example of an arithmetic function. Below are some other examples.
+
+\begin{example}
+    \hfill
+    \begin{itemize}
+        \item $\phi(n) = |\{j \in \Z \mid 1 \leq j \leq n,\, \gcd(j,n) = 1\}|$, number of positive integers up to $n$ that are relatively prime to $n$.
+        \item $d(n) = |\{j \in \Z^+ \mid j \divides n\}|$, number of positive divisors of $n$.
+        \item $\sigma(n) = \sum_{j \in \Z^+,\, j \divides n} j$, sum of positive divisors of $n$.
+        \item $r_k(n)$, number of representations of $n$ as a sum of $k$ squares.
+        \item $\left( \frac{n}{p} \right) $, the Legendre symbol where its equal to 1 iff the congruence $x^2 \equiv n \mod p$ for prime $p$ has a solution, and -1 if otherwise.
+    \end{itemize}
+\end{example}
+
+\section{Multiplicativity}
+
+There is a special class of arithmetic functions with nicer properties.
+
+\begin{definition}[Multiplicative Arithmetic Function]
+    An arithmetic function $a(n)$ is \textbf{multiplicative} if for any $m,n$ such that $\gcd(m,n) = 1$, $a(mn) = a(m)a(n)$.
+\end{definition}
+
+If we can remove the restriction that $m$ and $n$ are relatively prime, then we say that $a$ is \textbf{completely multiplicative}.
+
+If a function $f$ is multiplicative, for $n = p_1^{a_1}p_2^{a_2}\cdots p_r^{a_r}$,
+$$
+f(n) = f(p_1^{a_1} p_2^{a_2} \cdots p_r^{a_r}) = f(p_1^{a_1}) f(p_2^{a_2}) \cdots f(p_r^{a_r}) = \prod_{j=1}^r f(p_j^{a_j}).
+$$
+Further, if $f$ is completely multiplicative,
+$$
+f(n) = \prod_{j=1}^r f(p_j^{a_j}) = \prod_{j=1}^r f(p_j)^{a_j}
+$$
+
+\subsection{Summatory Function}
+
+\begin{definition}[Divisor Summatory Function]
+    Given some arithmetic function, we define the notation
+    $$
+    F(n) = \sum_{\substack{d \divides n \\ d > 0}} f(d)
+    $$
+    to be the sum over all distinct positive divisors $d$ of $n$. This $F(n)$ is sometimes called the divisor summatory function.
+\end{definition}
+
+\begin{theorem} \label{thm:summatory-func-mult}
+    Let $f$ be an arithmetic function and for $n \in \Z^+$. If $f$ is multiplicative, then the summatory function
+    $$
+    F(n) = \sum_{\substack{d \divides n \\ d > 0}} f(d)
+    $$
+    is also multiplicative.
+\end{theorem}
+
+\begin{proof}
+    Consider relatively prime integers $m$ and $n$ and
+    $$
+    F(mn) = \sum_{\substack{d \divides mn \\ d > 0}} f(d)
+    $$
+    Since $m$ and $n$ are relatively prime, it follows that
+    $$
+    \begin{aligned}
+        F(mn) &= \sum_{\substack{d_1 \divides m \\ d_1 > 0}}\sum_{\substack{d_2 \divides m \\ d_2 > 0}} f(d_1 d_2) \\
+        &=  \sum_{\substack{d_1 \divides m \\ d_1 > 0}} f(d_1) \sum_{\substack{d_2 \divides m \\ d_2 > 0}} f(d_2) \\
+        &= F(m) F(n)
+    \end{aligned}
+    $$
+\end{proof}
+
+\subsection{Euler's Phi Function}
+
+\begin{theorem}
+    The Euler's phi function $\phi$ is multiplicative. That is
+    $$
+    \phi(mn) = \phi(m) \phi(n)
+    $$
+    for $m$ and $n$ that are relatively prime.
+\end{theorem}
+
+\begin{proof}
+    Let $m = m_1m_2$ be a factorization of $m$ where $\gcd(m_1,m_2) = 1$.
+
+    Let
+    $$
+    \begin{aligned}
+        C_1 &= \text{complete residue system modulo $m_1$} \\
+        C_2 &= \text{complete residue system modulo $m_1$}
+    \end{aligned}
+    $$
+    and
+    $$
+    \begin{aligned}
+        R_1 &= \text{reduced residue system modulo $m_1$} \\
+        R_2 &= \text{reduced residue system modulo $m_1$}
+    \end{aligned}
+    $$
+    Recall that a reduced residue system modulo $m$ can be obtained by removing those numbers that are not relatively prime to $m$ from a complete residue system modulo $m$. To show that $\phi$ is multiplicative, it suffices to show that $\phi(m) = \phi(m_1) \phi(m_2)$.
+
+    For relatively prime $a_1,m_1$ and $a_2,m_2$, consider the congruences
+    $$
+    \begin{aligned}
+        x &\equiv a_1 \mod m_1 \\
+        x &\equiv a_2 \mod m_2
+    \end{aligned}
+    $$
+    This system of linear congruences has a solution by the Chinese Remainder Theorem. Note that $a_1 \in R_1$ and $a_2 \in R_2$. Given an $x$ where the system of congruences holds, there exists $a_1 \in R_1$ and $a_2 \in R_2$. Conversely, by the Chinese Remainder Theorem, given the $a_1 \in R_1$ and $a_2 \in R_2$, there exists a unique $x$ with $\gcd(x, m_1m_2) = 1$ that is a solution to the previous system of congruences. We have $\gcd(x,m_1m_2) = 1$ from the construction of $x$ due to the Chinese Remainder Theorem. In other words, $x$ belongs to a reduced residue system modulo $m$.
+
+    Therefore, there exists a one-to-one correspondance $x$ with $\gcd(x,m) = 1$ and pairs $a_1,a_2$ with $\gcd(a_1,m_1) = 1$ and $\gcd(a_2,m_2) = 1$. We have exactly $\phi(m)$ many such $x$'s, and we have $\phi(m_1)\phi(m_2)$ such pairs of $a_1,a_2$. Therefore,
+    $$
+    \phi(m) = \phi(m_1) \phi(m_2)
+    $$
+\end{proof}
+
+\subsubsection{Properties of Euler's Phi Function}
+
+\begin{theorem}
+    $\phi(p^a) = p^a - p^{a-1}$ for every prime $p$ and psotive integer $a$.
+\end{theorem}
+\begin{proof}
+    Recall that $\phi(p^a)$ counts the number of numbers from 1 to $p^a$ that are relatively prime to $p^a$. To count this, we count every number from 1 up to $p^a$, except those that are multiples of $p$, namely
+    $$
+    p,\, 2p,\, 3p,\, \ldots p^{a-1}p
+    $$
+    There are exactly $p^{a-1}$ such multiples of $p$. We have shown by counting that
+    $$
+    \phi(p^a) = p^a - p^{a-1}
+    $$
+\end{proof}
+
+\begin{theorem}
+    For any positive integer $n = \prod_{r=1}^n p_j^{a_j}$,
+    $$
+    \phi(n) = n \prod_{\substack{p \divides n \\ \text{$p$ prime}}} \left( 1 - \frac{1}{p} \right) = \prod_{j=1}^r \left( 1-\frac{1}{p_j} \right) 
+    $$
+\end{theorem}
+
+\begin{proof}
+    $$
+    \begin{aligned}
+        \phi(n) &= \prod_{j=1}^n \phi(p_j^{a_j}) \\
+        &= \prod_{j=1}^r (p_j^{a_j} - p_j^{a_j - 1}) \\
+        &= \prod_{j=1}^r p_j^{a_j} \prod_{j=1}^r (1 - p_j^{-1}) \\
+        &= n \prod_{j=1}^r \left( 1 - \frac{1}{p_j} \right) 
+    \end{aligned}
+    $$
+\end{proof}
+
+This gives us a closed form formula for $\phi(n)$.
+
+\begin{example}
+    Calculation involving $\phi$ function. Given $n = 496125 = 3^4 \cdot 5^3 \cdot 7^2$, find $\phi(n)$.
+    $$
+    \phi(n) = 496125 (1 - 1 / 3) (1 - 1 / 5) (1 - 1 / 7) = 496125 \cdot \frac{2}{3} \cdot \frac{4}{5} \cdot \frac{6}{7} = 226800
+    $$
+\end{example}
+
+\begin{theorem}[Gauss]
+    For $n \in \Z^+$,
+    $$
+    \sum_{\substack{d \divides n \\ d > 0}} \phi(d) = n.
+    $$
+\end{theorem}
+\begin{proof}
+    Recall that $\phi(n)$ is multiplicative. The divisors of $n$ are made of primes, prime powers, and products of prime powers. Fix a prime factorization of $n$ with $n = \prod_{j=1}^r p_r^{a_j}$. Since the divisors of $n$ contains powers of $n$'s prime divisors and their products and $\phi$ is multiplicative, we have
+    $$
+    \begin{aligned}
+        \sum_{d \divides n} \phi(d) &= \prod_{j=1}^r \sum_{i=1}^{a_j} \phi(p_j^i) \\
+        &= \prod_{j=1}^r \left[ \cancel{1} + (\cancel{p_j} - \cancel{1}) + (\cancel{p_j^2} - \cancel{p_j}) + \cdots + (p_j^{a_j} - \cancel{p_j^{a_j - 1}}) \right]  \\
+        &= \prod_{j=1}^r p_j^{a_j} \\
+        &= n
+    \end{aligned}
+    $$
+\end{proof}
+
+\subsection{Number of Positive Divisor Function}
+
+Recall that the number of positive divisor function, $d(n)$, is defined as
+$$
+\nu(n) = d(n) = |\{j \in \Z^+ \mid j \divides n\}|
+$$
+
+\begin{theorem}
+    $d(n)$ is multiplicative.
+\end{theorem}
+
+\begin{proof}
+    $d(n) = \sum_{d \divides n} 1$ and the constant function $1$ is multiplicative. By Theorem \ref{thm:summatory-func-mult}, the summatory function of a multiplicative function is also multiplicative. Therefore, $d$ is multiplicative.
+\end{proof}
+
+\begin{theorem}
+    $d(p^a) = a + 1$ for every power $p$ and positive integer $a$.
+\end{theorem}
+\begin{proof}
+    The divisors of $p^a$ are
+    $$
+    1,\, p,\, \ldots, p^a
+    $$
+    There are $a+1$ such numbers.
+\end{proof}
+
+\begin{theorem}
+    Let $n = \prod_{j=1}^r p_j^{a_j}$. Then,
+    $$
+    d(n) = \prod_{j=1}^r (a_j + 1)
+    $$
+\end{theorem}
+\begin{proof}
+    Follows from the previous theorem along with the fact that $d$ is multiplicative.
+\end{proof}
+
+\begin{example}
+    Given $n = 496125 = 3^4 \cdot 5^3 \cdot 7^2$, find $d(n)$.
+    $$
+    d(496125) = 5 \cdot 4 \cdot 3 = 60.
+    $$ 
+\end{example}
+
+\begin{theorem}
+    $d(n)$ is odd if and only if $n$ is a square.
+\end{theorem}
+\begin{proof}
+    Since $d(n) = \prod_{j=1}^r (a_j + 1)$, $d(n)$ is odd iff all terms of the product is odd. It follows that all the $a_j$'s must be even, which implies that $n$ is a square.
+\end{proof}
+
+\begin{theorem}
+    Let $n \in \Z^+$. Then
+    $$
+    \left( \sum_{d \divides n} \nu(d) \right)^2 = \sum_{d \divides n} \nu^3(d).
+    $$
+\end{theorem}
+
+\begin{proof}
+    It suffices to prove the theorem for prime powers $n = p^a$. Starting from the LHS,
+    $$
+    \begin{aligned}
+        \left( \sum_{d \divides p^a} \nu(d) \right)^2 &= \left( \sum_{b=0}^a d(p^b) \right)^2 \\
+        &= \left( \sum_{b=0}^a (b+1) \right)^2 \\
+        &= \left( \frac{(a+1)(a+2)}{2} \right)^2 \\
+        &= \frac{(a+1)^2(a+2)^2}{4}
+    \end{aligned}
+    $$
+    For the RHS,
+    $$
+    \sum_{b=0}^a d^3(p^a) = \sum_{b=0}^a (b+1)^3
+    $$
+    We show that LHS = RHS using induction.
+
+    Base Case: When $a = 0$, clearly LHS = RHS. When $a = 1$, LHS = $\frac{4 \cdot 9}{4} = 9$ and RHS = $1 + 8 = 9$, so LHS = RHS when $a = 1$ too.
+\end{proof}

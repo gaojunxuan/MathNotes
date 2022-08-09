@@ -1,0 +1,126 @@
+\section{Inclusion-Exclusion Principle}
+
+\begin{definition} \label{def:inc-exc-notation}
+    Let $S$ be a set. Fix a collection $A_i \subseteq S$ indexed by $i \in \{1,\ldots,n\}$. Given $I \subseteq \{1,\ldots,n\}$, we let $A_I = \bigcap_{i\in I} A_i$. In particular, we set $A_{\emptyset} = S$.
+\end{definition}
+
+In simple terms, $x \in A_I$ if and only if $\forall i \in I.\, x \in A_i$.
+
+As an example, consider $S = \{1,\ldots,20\}$ and $A_1 = \{ x \in S \mid \text{$x$ is divisible by 2 }\}$, $A_2 = \{ x \in S \mid \text{$x$ is divisible by 3 }\}$, and $A_3 = \{ x \in S \mid \text{$x$ is divisible by 4}\}$. Then, we have:
+\begin{itemize}
+    \item $A_{\emptyset} = S$
+    \item $A_{\{1,2\}} = \{6,12,18\}$
+    \item $A_{\{1,3\}} = \{8, 16\}$
+    \item $A_{\{1,2,3\}} = \{\}$  
+\end{itemize}
+
+We are all familiar with the addition principle: given two disjoint sets $A, B$ such that $A \cap B = \emptyset$,
+$$
+|A \cup B| = |A| + |B|
+$$
+In the case where $A$ and $B$ are not disjoint, we can simply remove the count for the common elements among $A$ and $B$ that were double-counted.
+$$
+|A \cup B| = |A| + |B| - |A \cap B|
+$$
+We further observe that four three sets $A,B,C$, we have
+$$
+|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| - |A \cap B \cap C|
+$$
+The generalization of this is called the Inclusion-Exclusion Principle. There are multiple equivalent formulations of the Inclusion-Exclusion Principle.
+
+\begin{theorem}[Inclusion-Exclusion Principle]
+    Let $S$ be a set. Let $A_1,\ldots,A_n \subseteq S$ be subsets of $S$ indexed by $i \in \{1,\ldots,n\}$. Then, the number of elements in $S$ that is in none of $A_i$ is
+    $$
+    \left| \bigcap_{i=1}^n \overline{A_i} \right| = \left| S \setminus \bigcup_{i = 1}^n A_i \right| = \sum_{I \subseteq [n]} (-1)^{|I|} |A_I|
+    $$
+    and equivalently,
+    $$
+    \left| \bigcup_{i=1}^n A_i \right| = \sum_{\substack{I \subseteq [n] \\ I \neq \emptyset}} (-1)^{|I|+1} |A_I|
+    $$
+\end{theorem}
+
+If stated without using the notation introduced in Definition \ref{def:inc-exc-notation}, the Inclusion-Exclusion Principle can be stated as follows.
+
+\begin{theorem}
+    If $A_i \subseteq X$ for $1 \leq i \leq n$, then
+    $$
+    \left| \bigcup_{i=1}^n A_i \right| = \sum_{k=1}^n \left( (-1)^{k+1} \sum_{\{i_1,\ldots,i_k\} \subseteq [n]} \left| \bigcap_{j=1}^k A_{i_j} \right| \right)
+    $$
+    and equivalently
+    $$
+    \left| \bigcap_{i=1}^n \overline{A_i} \right| = |X| + \sum_{k=1}^n \left( (-1)^{k} \sum_{\{i_1,\ldots,i_k\} \subseteq [n]} \left| \bigcap_{j=1}^k A_{i_j} \right| \right)
+    $$
+\end{theorem}
+
+We give a proof of the Inclusion-Exclusion Principle using induction.
+
+\begin{proof}
+    \hfill
+
+    Base Case: $n = 1$. $A_1$ is the only subset of $S$ in the collection. $| \bigcup_{i=1}^n \overline{A_i}| = |S| - |A_i| = \sum_{I \in [1]} (-1)^{|I|} |A_I|$.
+
+    Inductive Step: Let $n \in \N$ be arbitrary. Assume that the principle holds for all $k \leq n$. Consider a collection of subsets $A_1,\ldots,A_{n+1} \subseteq S$. Let $B_i = A_i \cap A_{n+1}$ for $i \in \{1,\ldots,n\}$. Let $B_I = A_{n+1} \cap \bigcap_{i \in I}A_i$. Note that $B_{\emptyset} = A_{n+1}$.
+
+    We know by induction hypothesis that
+    $$
+    \left| S \setminus \bigcup_{i=1}^n A_i \right| = \sum_{I \subseteq [n]} (-1)^{|I|} |A_I| \qquad \left| A_{n+1} \setminus \bigcup_{i=1}^n A_i \right| = \sum_{I \subseteq [n]} (-1)^{|I|} |B_I|
+    $$
+    In other words, $\sum_{I \subseteq [n]} (-1)^{|I|} |A_I|$ counts the number of elements in $S$ that is not in $A_1,\ldots,A_n$. Similarly, $\sum_{I \subseteq [n]} (-1)^{|I|} |B_I|$ counts the number of elements in $S$ that satisfied only $A_{n+1}$. Now, consider
+    $$
+    \begin{aligned}
+        \sum_{I \subseteq [n+1]} (-1)^{|I|} |A_I| &= \sum_{I \subseteq [n]} (-1)^{|I|} |A_I| + \sum_{I \subseteq [n]} (-1)^{|I| + 1} |A_{I \cup \{n+1\}}| \\
+        &= \sum_{I \subseteq [n]} (-1)^{|I|} |A_I| - \sum_{I \subseteq [n]} (-1)^{|I|} |A_{I \cup \{n+1\}}| & \text{take out $-1$} \\
+        &= \left| S \setminus \bigcup_{i=1}^n A_i \right| - \sum_{I \subseteq [n]} (-1)^{|I|} |A_{I \cup \{n+1\}}| & \text{by I.H.} \\
+        &= \left| S \setminus \bigcup_{i=1}^n A_i \right| - \sum_{I \subseteq [n]} (-1)^{|I|} |B_I| & \text{by definition of $B_I$} \\
+        &= \left| S \setminus \bigcup_{i=1}^n A_i \right| - \left| A_{n+1} \setminus \bigcup_{i=1}^n A_i \right| & \text{by I.H.} \\
+        &= \left| S \setminus \bigcup_{i=1}^{n+1} A_i \right|
+    \end{aligned}
+    $$
+\end{proof}
+
+Let's consider the following example.
+
+\begin{example}
+    Count the number of integer solutions to the equation $x_1 + x_2 + x_3 + x_4 = 100$ with $x_1, x_2 \leq 10$ and $x_i \geq 0$ for all $i \in \{1,2,3,4\}$.
+
+    Let $S$ be the set of solutions with $x_i \geq 0$ for all $i \in \{1,2,3,4\}$. Let $A_1$ be the set of solutions with $x_1 \geq 10$ and $x_i \geq 0$ for all $i \in \{1,2,3,4\}$. Let $A_2$ be the set of solutions with $x_2 \geq 10$ and $x_i \geq 0$ for all $i \in \{1,2,3,4\}$.
+
+    Notice that the quantity that we want to count is equal to $|S \setminus (A_1 \cup A_2)|$. If a solution in $S$ fails any of our conditions, it must be in either $A_1$ or $A_2$. We can count $|S|$ using the stars-and-bars technique (since we are essentially trying to partition 100 elements into 4 groups by placing 3 bars). So it follows that we have $|S| = \binom{100+3}{3}$. We can do the same to count $|A_1|$ and $|A_2|$. It follows from the Principle of Inclusion-Exclusion that
+    $$
+    \begin{aligned}
+        |S \setminus (A_1 \cup A_2)| &= |S| - (|A_1|+|A_2|) + |A_1 \cap A_2| \\
+        &= \binom{100+3}{3} - \left( \binom{90+3}{3} + \binom{90+3}{3} \right) - \binom{80 + 3}{3}
+    \end{aligned}
+    $$
+\end{example}
+
+\section{Counting Surjections}
+
+Recall that a function $f:\; X \to Y$ is a surjection if for all $y \in Y$, there exists an $x \in X$ such that $f(x) = y$. Also, the number of functions from $X$ to $Y$ is $|Y|^{|X|}$.
+
+\begin{theorem}
+    Let $S(n,m)$ be the number of surjections $f:\; [n] \to [m]$. Then,
+    $$
+    S(n,m) = \sum_{k=0}^m (-1)^k \binom{m}{k} (m-k)^n
+    $$
+\end{theorem}
+
+\begin{proof}
+    Let $F$ be the set of all functions from $[n]$ to $[m]$. For each $i \in [m]$, let
+    $$
+    A_i = \{f \in F \mid \forall x \in [n].\, f(x) \neq i \}.
+    $$
+    We note that $F \setminus \bigcup_{i = 1}^m A_i$ contains all surjective functions because we have removed all the non-surjective functions. For any $I \subseteq [m]$ of size $k$, $|A_I| = (m-k)^n$. This is because each $A_i$  It follows that
+    $$
+    \begin{aligned}
+        S(n,m) &= \left| F \setminus \bigcup_{i=1}^m A_i \right| \\
+        &= \sum_{I \subseteq [m]} (-1)^{|I|} |A_I| \\
+        &= \sum_{k=0}^m \sum_{\substack{I \subseteq [m] \\ |I| = k}} (-1)^{I} |A_I| \\
+        &= \sum_{k=0}^m \sum_{\substack{I \subseteq [m] \\ |I| = k}} (-1)^{I} (m-k)^n
+    \end{aligned}
+    $$
+    Note that there are $\binom{m}{k}$ ways to choose a subset of size $k$ from a set of size $m$. Hence,
+    $$
+    S(n,m) = \sum_{k=0}^m \sum_{\substack{I \subseteq [m] \\ |I| = k}} (-1)^{I} (m-k)^n = \sum_{k=0}^m \binom{m}{k} (-1)^{I} (m-k)^n
+    $$
+\end{proof}

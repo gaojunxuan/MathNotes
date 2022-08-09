@@ -1,0 +1,152 @@
+\section{GCD}
+
+GCD stands for greatest common divisor, as defined here.
+
+\begin{definition}[Greatest Common Divisor]
+    Let $a,b \in \Z$. The \textit{\textbf{greatest common divisor}} of $a$ and $b$ is the largest of all common divisors of $a$ and $b$. The notation for the GCD of $a$ and $b$ is $(a,b)$ or $\gcd(a,b)$.
+\end{definition}
+
+\begin{proposition}
+    $\gcd(\frac{a}{d}, \frac{b}{d}) = 1 \iff (a,b) = d$ 
+\end{proposition}
+
+\begin{proof}
+    \hfill
+
+    ($\impliedby$): Suppose $\gcd(a,b) = d$ and $\gcd(\frac{a}{d}, \frac{b}{d}) = d'$. We want to show that $d' = 1$. By definition,
+    $$
+    d' \divides \frac{a}{d} \implies \frac{a}{d} = c_1 d' \implies a = c_1d'd
+    $$
+    and
+    $$
+    d' \divides \frac{b}{d} \implies \frac{b}{d} = c_2 d' \implies b = c_2d'd
+    $$
+    Thus, $d'd$ is also a common divisor of $a$ and $b$. Since $d$ is the \textbf{greatest} common divisor, $d' = 1$. Otherwise, it would contradict the maximality of $d$.
+
+    ($\implies$): Suppose $\gcd(\frac{a}{d},\frac{b}{d}) = 1$ and $\gcd(a,b) = d'$. Then,
+    $$
+    d' \divides a \implies a = d' c_1 \implies \frac{a}{d} = \frac{d}{d'} c_1
+    $$
+    and
+    $$
+    d' \divides b \implies b = d' c_2 \implies \frac{b}{d} = \frac{d}{d'} c_2
+    $$
+    Thus, $d'/d$ is a common divisor of $\frac{a}{d}$ and $\frac{b}{d}$. Since $\gcd(\frac{a}{d}, \frac{b}{d}) = 1$, $d' = d$. So, $\gcd(a,b) = d$.
+\end{proof}
+
+\begin{proposition} \label{prop:gcd-linear-combination}
+    Let $a,b \in \Z$ such that at least one of the two is not 0. Then,
+    $$
+    \gcd(a,b) = \min\{ma+nb > 0 \mid m,n \in \Z\} > 0
+    $$
+\end{proposition}
+
+\begin{proof}
+    We first show that $\{ma+nb > 0 \mid m,n \in \Z\}$ is not empty. This is trivial because we can arbitrary choose some $m,n$ such that $ma+nb > 0$.
+
+    By the Well Ordering Principle, $\{ma+nb > 0 \mid m,n \in \Z\}$ has a minimum. Let $d = m'a + n'b$ be such minimal element.
+
+    To prove the proposition, it suffices to show that $d$ is a common divisor of $a$ and $b$ and that $d$ is the greatest common divisor.
+
+    \textit{Claim}: $d \divides a$ and $d \divides b$. WLOG, $b \geq a > 0$. By the division algorithm, $a = dq + r$ where $0 \leq r < d$. Rearrange this and we get
+    $$
+    r = a - dq = a - (m'a + n'b) q = (1 - m'q) a + n'q b
+    $$
+    Note that unless $r = 0$, $r$ would be a smaller linear combination of $a$ and $b$, contradicting the minimality of $d = m'a + n'q$. Therefore, $r = 0$. This implies $a = dq$ so $d \divides a$. The same argument also shows that $d \divides b$.
+
+    \textit{Claim}: $d$ is the greatest common divisor of $a$ and $b$. Let $c$ be an arbitrary common divisor of $a$ and $b$. We want to show that $d \geq c$ for all possible choice of $c$. Since $c$ is a common divisor of $a$ and $b$, it is also a common divisor of $(m'a+n'b)$. Hence, $c \divides (m'a + n'b)$ so $c \divides d$. This implies that $c \leq d$.
+
+    Combining the two claims proves that $d$ is the greatest common divisor.
+\end{proof}
+
+\section{Euclidean Algorithm}
+
+Proposition \ref{prop:gcd-linear-combination} gives us a way to find the greatest common divisor between two numbers. But it is not easy to compute. The Euclidean algorithm is an easier and more commonly used algorithm for finding the GCD.
+
+\begin{lemma} \label{lem:eucliean-algo-lemma}
+    Let $a,b \in \Z^+$ such that $a \geq b$. Let $a = bq + r$ for $q,r \in \Z$. Then, $\gcd(a,b) = \gcd(b,r)$.
+\end{lemma}
+
+\begin{proof}
+    To prove the lemma, it suffices to prove that for $a = bq + r$, $\gcd(a,b) = c$ if and only if $\gcd(b,r)= c$.
+
+    Let $c$ be such that $c \divides a$ and $c \divides b$. Then, $c \divides r$ because $r$ is a linear combination of $a$ and $b$.
+
+    Let $c \divides b$ and $c \divides r$. Then, $c \divides a$ because $a$ is a linear combnation of $b$ and $r$. Putting the two parts together, we have $c = \gcd(b,r) = \gcd(a,b)$.
+\end{proof}
+
+Now we are ready to state the Eucliean algorithm.
+
+\begin{theorem}[Euclidean Algorithm]
+    Let $a,b \in \Z^+$ with $a \geq b > 0$. By the division algorithm, 
+    $$
+    a = bq_1 + r_1
+    $$
+    for some $q_1,r_1 \in \Z$ such that $0 \leq r_1 < b$. 
+    
+    If $r_1 > 0$, we apply the division algorithm by letting
+    $$
+    b = r_1 q_2 + r_2
+    $$
+    for some $q_2,r_2 \in \Z$ such that $0 \leq r_2 < r_1$.
+
+    If $r_2 > 0$, we apply the division algorithm again by letting
+    $$
+    r_1 = r_2q_3 + r_3
+    $$
+    for some $q_3,r_3 \in \Z$ such that $0 \leq r_3 < r_2$.
+
+    Repeat until $r_n = 0$ for some $n$. If $n > 1$, then $\gcd(a,b) = r_{n-1}$. If $n=1$, $\gcd(a,b) = b$.
+\end{theorem}
+
+\begin{proof}
+    We first observe that the algorithm terminates after a finite amount of iterations since $r_1 > r_2 > \cdots > r_n = 0$ is a strictly decreasing sequence of positive integers.
+
+    If $n = 1$, $r_1 = 0$. In this case, $a = bq_1$ for some $q_1$ and $b \divides a$. It follows that $\gcd(a,b) = b = \gcd(b,0)$.
+
+    Otherwise,
+    $$
+    \gcd(a,b) = \gcd(b,r_1) = \gcd(r_1,r_2) = \cdots = \gcd(r_{n-1}, r_n) = \gcd(r_{n},0)
+    $$
+    by repeated application of Lemma \ref{lem:eucliean-algo-lemma}.
+\end{proof}
+
+\section{Least Common Multiple}
+
+\begin{definition}[Least Common Multiple]
+    Let $a,b \neq 0$. The \textit{\textbf{least common multiple}} of $a$ and $b$, denoted by $[a,b]$ or $\lcm(a,b)$, is the least $m > 0$ such that $a \divides m$ and $b \divides m$.
+\end{definition}
+
+\begin{example}
+    What is $\lcm(2^3 3^2 7^5,\, 2 \cdot 3^5 7 \cdot 11^2)$? \\
+    We take the least common multiple of each factor, so we have $2^3 3^5 7^5 11^2$ 
+\end{example}
+
+If $\gcd(a,b) = 1$, $\lcm(a,b) = ab$. In general, we have the following theorem
+
+\begin{theorem}
+    $
+    \gcd(a,b) \cdot \lcm(a,b) = ab
+    $
+\end{theorem}
+
+\begin{proof}
+    Assume $a,b > 1$. If either $a$ or $b$ is equal to 1, then the proof is trivial. Let
+    $$
+    a = p_1^{a_1} p_2^{a_2} \cdots p_n^{a_n} \qquad b = p_1^{b_1} p_2^{b_2} \cdots p_n^{b_n}
+    $$
+    so that $p_1,\ldots,p_n$ are the primes in common to $a$ and $b$. Since $\gcd(a,b)$ is the greatest common \textbf{divisor},
+    $$
+    \gcd(a,b) = p_1^{\min(a_1,b_1)} p_2^{\min(a_2,b_2)} \cdots p_n^{\min(a_n,b_n)}
+    $$
+    Also,
+    $$
+    \lcm(a,b) = p_1^{\max(a_1,b_1)} p_2^{\max(a_2,b_2)} \cdots p_n^{\max(a_n,b_n)}
+    $$
+    Multiply the two together and we get
+    $$
+    \gcd(a,b) \cdot \lcm(a,b) = p_1^{a_1+b_1} \cdots p_n^{a_n + b_n} = (p_1^{a_1} \cdots p_n^{a_n}) \cdot (p_1^{b_1} \cdots p_n^{b_n}) = ab
+    $$
+\end{proof}
+
+In practice, we can use theorem to find the least common multiple once we find the greatest common divisor using the Euclidean algorithm.

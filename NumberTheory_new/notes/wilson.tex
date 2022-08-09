@@ -1,0 +1,74 @@
+\section{Wilson's Theorem}
+
+In a nutshell, Wilson's theorem claims that if $p$ is a prime number, then $(p-1)! \equiv -1 \mod p$. Or equivalently, if $p$ is prime, then $(p-1)! \equiv p-1 \mod p$. We prove this preliminary lemma before we proceed to prove Wilson's theorem.
+
+\begin{lemma} \label{lem:wilson-thm-lemma}
+    Let $p$ be a prime number and let $a \in \Z$. Then, $a$ is its own multiplicative inverse modulo $p$ if and only if $a \equiv \pm 1 \mod p$.
+\end{lemma}
+
+\begin{proof}
+    \hfill
+
+    ($\implies$): Assume that $a$ is its own multiplicative inverse modulo $p$. Then, $a^2 \equiv 1 \mod p$. So, $p \divides a^2 - 1$ and $p \divides (a+1)(a-1)$. By Lemma \ref{lem:unique-factor-lem}, either $p \divides (a+1)$ or $p \divides (a-1)$ since $p$ is prime. It follows that either $a \equiv -1 \mod p$ or $a \equiv 1 \mod p$.
+
+    ($\impliedby$): Assume that $a \equiv \pm 1 \mod p$. Then, $a^2 \equiv 1 \mod p$, so $a$ is its own multiplicative inverse modulo $p$ by definition.
+\end{proof}
+
+\begin{theorem}[Wilson's Theorem]
+    Let $p$ be a prime number. Then,
+    $$
+    (p-1)! \equiv -1 \mod p
+    $$
+\end{theorem}
+
+\begin{proof}
+    The theorem trivially holds for $p = 2$ and $p = 3$, so assume that $p > 3$.
+
+    Since $p$ is prime, $\gcd(a,p) = 1$ for all $1 \leq a \leq p-1$. It follows from Corollary \ref{cor:mult-inverse-existence} that each $a \in \Z$ with $1 \leq a \leq p-1$ has an multiplicative inverse modulo $p$. Consider an $a$ with $1 \leq a \leq p-1$ and its inverse $a'$. By Lemma \ref{lem:wilson-thm-lemma}, the \textbf{only} integers that are their \textbf{own inverses} modulo $p$ are those integers congruent to $\pm 1$. Then, if $a = a'$, then $a = 1$ (since $1 \equiv 1 \mod p$) or $a = p-1$ (since $p-1 \equiv -1 \mod p$).
+
+    Then, for each remaining integer $2 \leq a \leq p-2$ after removing $-1$ and $p-1$, there exists a different integer $a'$ with $2 \leq a' \leq p-2$ such that $aa' \equiv 1 \mod p$. There are $(p-3)/2$ distinct pairs of $a$ and $a'$. Group integers $2,3,\ldots,p-2$ into pairs of $a$ and $a'$ such that $aa' \equiv 1 \mod p$. Then, take all such congruences and multiply them together, giving us
+    $$
+    (p-2)! \equiv 1 \mod p
+    $$
+    Multiplying both sides by $(p-1)$ yields
+    $$
+    (p-1)! = (p-2)! (p-1) \equiv (p-1) \equiv -1 \mod p
+    $$
+    as desired.
+\end{proof}
+
+The converse of Wilson's theorem is also true.
+
+\begin{proposition}
+    Let $n \in \Z$ with $n > 1$. If $(n-1)! \equiv -1 \mod n$, then $n$ is a prime number.
+\end{proposition}
+
+\begin{proof}
+    Let $n \in \Z$ and assume $n = ab > 1$ with $1 \leq a < n$. Assume $(n-1)! \equiv -1 \mod n$. To show that $n$ is prime, it suffices to show that $a = 1$ (which implies the only factorization of $n$ is the trivial factorization).
+
+    Since $1 \leq a \leq n-1$, $a \divides (n-1)!$ since $(n-1)! = 1\cdot 2 \cdot \ldots a \cdot \ldots \cdot n-1$. Further, $(n-1)! \equiv -1 \mod n$ implies $n \divides (n-1)! + 1$ by definition. By Proposition 2.1, since $a \divides n$, $a \divides (n-1)!$. And by Proposition 2.2, $a \divides (n-1)! + 1 - (n-1)!$, which implies $a \divides 1$. Hence, $a = 1$.
+\end{proof}
+
+Although rather tedious and impractical for large $n$, this nontheless gives another interesting characterization of primality.
+
+\subsection{Application of Wilson's Theorem}
+
+\begin{example}
+    Use Wilson's theorem to find the least nonnegative residue modulo $m=11$ of integer $n = 31!/22!$.
+\end{example}
+
+$$
+\begin{aligned}
+    \frac{31!}{22!} &= 31 \cdot 30 \cdot \ldots \cdot 23 \\
+    &\equiv 9 \cdot 8 \cdot 7 \cdot \ldots \cdot 1 \mod 11
+\end{aligned}
+$$
+To apply Wilson's theorem, we note that by Wilson's theorem, $10! \equiv -1 \mod 11$. Since $10! \equiv -1 \mod 11$ and $10 \equiv -1 \mod 11$, we have $9! \equiv 1 \mod 11$.
+
+\section{Wilson Prime}
+
+\begin{definition}
+    A Wilson prime $p$ is a prime such that $(p-1)! \equiv -1 \mod p^2$.
+\end{definition}
+
+There are only known Wilson primes: 5, 13, 563. It is an unsolved problem whether or not there are infinitely many Wilson primes.

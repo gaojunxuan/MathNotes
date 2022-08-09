@@ -1,0 +1,104 @@
+\section{Fermat's Little Theorem}
+
+\begin{theorem}[Fermat's Little Theorem]
+    If $p$ is a prime and $p \notdivides a$, then
+    $$
+    a^{p-1} \equiv 1 \mod p
+    $$
+\end{theorem}
+
+\begin{proof}
+    Let $p$ be prime and assume $p \notdivides a$. Consider $a, 2a, 3a, \ldots, (p-1)a$. We first claim that $p \notdivides ja$ for $j = 1,2,\ldots,p-1$. To see why, suppose not and $p \divides ia$ for some $i$. Then $p \divides a$ or $p \divides i$ since $p$ is prime. Since by assumption, $p \notdivides a$, we have $p \divides i$ but this is impossible since $i < p$.
+
+    Next, we note that no two of the given $p-1$ integers are congruent modulo $p$. Again, suppose not. Then, $ja \equiv ka \mod p$ for some $j \neq k$. It follows that $jaa' \equiv kaa' \mod p$ where $a'$ is the inverse of $a$ modulo $p$. But then, $j \equiv k \mod p$ which contradicts $j,k < p$ and $j \neq k$. So each of $a,2a,3a,\ldots,(p-1)a$ belongs to $p$ distinct residue classes modulo $p$. There is an ordering of $a,2a,\ldots,(p-1)a$ such that their residues modulo $p$ are $1,2,\ldots,p-1$. Multiply these congruence relations together and we have
+    $$
+    a \cdot 2a \cdot \ldots \cdot (p-1)a \equiv 1 \cdot 2 \cdot \ldots \cdot (p-1) \mod p
+    $$
+    or equivalently
+    $$
+    a^{p-1} (p-1)! \equiv (p-1)! \mod p
+    $$
+    We can cancel $(p-1)!$ on both sides since $p$ and $(p-1)!$ are relatively prime, giving us
+    $$
+    a^{p-1} \equiv 1 \mod p.
+    $$
+\end{proof}
+
+\begin{example}
+    $$
+    \begin{aligned}
+        3^4 \equiv 1 \mod 5 \\
+        5^6 \equiv 1 \mod 7
+    \end{aligned}
+    $$
+\end{example}
+
+\subsection{Applications of Fermat's Little Theorem}
+
+\begin{example}
+    Find the least non-negative residue of $29^{202}$ modulo 13.
+\end{example}
+
+Note that $\gcd(29,13) = 1$ and $202 = 12 \cdot 16 + 10$. Then, we can rewrite the original $29^{202}$ as $29^{12 \cdot 16 + 10}$. By Fermat's little theorem,
+$$
+29^{12} \equiv 1 \mod 13.
+$$
+So, $29^{12 \cdot 16} \equiv 1 \mod 13$ and $29^{12 \cdot 16 + 10} \equiv 29^{10} \mod 13$. Further,
+$$
+29^10 \equiv 3^{10} \mod 13
+$$
+and by Fermat's little theorem,
+$$
+3^{12} \equiv 1 \mod 13.
+$$
+And
+$$
+\begin{aligned}
+    3^{10} &\equiv x \mod 13 \\
+    9 \cdot 3^{10} &\equiv 9x \mod 13 \\
+    3^{12} &\equiv 9x \mod 13
+\end{aligned}
+$$
+Then, the problem is equivalent to finding the smallest non-negative inverse of $9$ modulo $13$.
+$$
+9x \equiv 1 \mod 13 \implies x = 3
+$$
+
+There are also some immediate corollaries following from Fermat's little theorem.
+
+\begin{corollary}
+    Let $p$ be a prime and $p \notdivides a$, then the inverse of $a$ modulo $p$ is $a^{p-2}$.
+\end{corollary}
+
+\begin{proof}
+    $a^{p-1} = a^{p-2} \cdot a \equiv 1 \mod p$.
+\end{proof}
+
+\begin{corollary}
+    For all $a \in \Z$ and primes $p$, $a^{p} \equiv a \mod p$. 
+\end{corollary}
+
+\begin{proof}
+    If $p \notdivides a$, the corollary follows from Fermat's little theorem. If $p \divides a$, $a^p \equiv 0 \mod p$ and $a \equiv 0 \mod p$.
+\end{proof}
+
+\section{Pseudoprimes}
+
+Consider 341 and the congruence $2^{341} \equiv 2 \mod 341$. We show that the congruence is indeed true. Note that $341 = 11 \cdot 31$. We have
+$$
+\begin{aligned}
+    & 2^{10} \equiv 1 \mod 11 \qquad & 2^{30} \equiv 1 \mod 31 \qquad & 2^{5} \equiv 1 \mod 31 \\
+    & 2^{340} \equiv 1 \mod 11 \qquad & 2^{330} \equiv 1 \mod 31 \qquad & 2^{10} \equiv 1 \mod 31 \\
+    & 2^{341} \equiv 2 \mod 11 \qquad & & 2^{11} \equiv 2 \mod 31 \\
+\end{aligned}
+$$
+which implies $2^{341} \equiv 2 \mod 11$ and $2^{341} \equiv 2 \mod 31$. Since $31$ and $11$ are relatively prime,
+$$
+2^{341} \equiv 2 \mod 341.
+$$
+
+There are infinitely many such instances where the congruence $2^{n} \equiv 2 \mod n$ holds. Such numbers are called pseudoprimes, but it turns out that the smallest pseudoprime is 341.
+
+\begin{definition}
+    If $2^n \equiv 2 \mod n$, then $n$ is a pseudoprime.
+\end{definition}

@@ -1,0 +1,80 @@
+\section{Derangement}
+
+\begin{definition}[Derangement]
+    A derangement is a permutation $s:\; [n] \to [n]$ with the property that for all $i \in [n].\; s(i) \neq i$ We denote the number of derangements with the reverse factorial (or the subfactorial or $n$th derangement number), $d_n$ or $!n$.
+\end{definition}
+
+Note that $d_n < n!$. In other words, a derangement is a permutation with no fixed point. This interpretation gives us some hints on how to count derangements, which is formalized by the following theorem.
+
+\begin{theorem}
+    $$
+    d_n = \sum_{k=0}^n (-1)^k \binom{n}{k} (n-k)! = n! \sum_{k=0}^n \frac{(-1)^k}{k!}
+    $$
+\end{theorem}
+
+\begin{proof}
+    For $i \in [n]$, let $A_i$ be the set of permutations $s$ such that $s(i) = i$ (the permutations that violates the definition of a derangement due to a fixed point at the $i$th value).
+
+    Let $S$ be the set of all permutations of $[n]$. Then, the number of derangements is
+    $$
+    S \setminus \bigcup_{i \in [n]} A_i
+    $$
+    For any $I \subseteq [n]$ of size $k$, $|A_I| = (n-k)!$. This is from the observation that the positions in $I$ are not changed in the permutation so only $(n-k)$ elements are permuted. Then, we have
+    $$
+    \begin{aligned}
+        d_n &= \left| S \setminus \bigcup_{i \in [n]} A_i \right| \\
+        &= \sum_{I \subseteq [n]} (-1)^{|I|} |A_I| \\
+        &= \sum_{k=0}^n (-1)^k \binom{n}{k} (n-k)!
+    \end{aligned}
+    $$
+\end{proof}
+
+\section{Number Theory}
+
+\begin{definition}[Greatest Common Divisor]
+    Let $a,b \in \Z$. The \textit{\textbf{greatest common divisor}} of $a$ and $b$ is the largest of all common divisors of $a$ and $b$. The notation for the GCD of $a$ and $b$ is $(a,b)$ or $\gcd(a,b)$.
+\end{definition}
+
+We say two integers $n,m$ are \textbf{relatively prime} if $\gcd(n,m)=1$. In other words, $n$ and $m$ are relatively prime if and only if they share no prime divisors.
+
+\begin{definition}[Euler's Totient Function]
+    For $n \in \N$, we let
+    $$
+    \phi(n) = | \{m \in [n] \mid \gcd(m,n) = 1\}
+    $$
+    known as the Euler's phi or \textbf{Euler's totient function}.
+\end{definition}
+
+Euler's totient function counts the positive integers up to a given integer $n$ that are relatively prime to $n$. The Euler's totient function is of great interest in the field of number theory and group theory. We will derive a closed form formula for $\phi(n)$ using combinatorics, but before we do that, we will first prove a lemma regarding prime divisibility.
+
+\begin{lemma}
+    Let $n \geq 2$ be an integer, and let $p_1,\ldots,p_k$ be a collection of distinct primes that divide $n$. Then, there are $\frac{n}{p_1\cdots p_k}$ integers in $\{1,\ldots,n\}$ that are divisible by $p_1,\ldots,p_k$.
+\end{lemma}
+
+\begin{proof}
+    Let $m \in \N$ where $m \leq n$. Suppose that $m$ is divisible by all $p_1,\ldots,p_k$. It follows from the Fundamental Theorem of Arithmetics that $m = p_1 \cdots p_k \cdot \alpha$ for some $\alpha \in \N$. Hence, $p_1 \cdots p_k \leq p_1 \cdots p_k \cdot \alpha \leq n$. It follows that $1 \leq \alpha \leq \frac{n}{p_1 \cdots p_k}$. Since $\frac{p}{p_1\cdots p_k}$ is an integer, the set $\{ \alpha \cdot p_1 \cdots p_k \mid \alpha \in \{1,\ldots,\frac{n}{p_1\cdots p_k}\}\}$ contains all the positive integers divisible by all of $p_1,\ldots,p_k$. The size of the set is $\frac{n}{p_1\cdots p_k}$.
+\end{proof}
+
+Now we are ready to derive a closed form formula for $\phi(n)$ using Inclusion-Exclusion.
+
+\begin{theorem}
+    For all $n \geq 2$, if $p_1,\ldots,p_k$ are all the prime factors of $n$, then
+    $$
+    \phi(n) = n \prod_{i=1}^k \frac{p_i - 1}{p_i}
+    $$
+\end{theorem}
+
+\begin{proof}
+    For each $i \in \{1,\ldots,k\}$, let $A_i$ be the set of integers in $\{1,\ldots,n\}$ that are divisible by $p_i$. Note that $[n] \setminus \bigcup_{i=1}^k A_i$ is the set of positive integers less than or equal to $n$ that are relatively prime with $n$. By the previous lemma, for all $I \subseteq \{1,\ldots,n\}$, $|A_I| = n \prod_{i \in I} 1/p_i$.
+
+    Then,
+    $$
+    \begin{aligned}
+        \phi(n) &= \sum_{I \subseteq [k]} (-1)^{|I|} \cdot n \cdot \prod_{i \in I} \frac{1}{p_i} \\
+        &= n \sum_{I \subseteq [k]} (-1)^{|I|} \prod_{i \in I} \frac{1}{p_i} \\
+        &= n \sum_{I \subseteq [k]} \prod_{i \in I} \frac{(-1)}{p_i} \\
+        &= n \prod_{i=1}^k \left( 1 - \frac{1}{p_i} \right) \\
+        &= n \prod_{i=1}^k \frac{p_i - 1}{p_i}
+    \end{aligned}
+    $$
+\end{proof}
